@@ -16,7 +16,7 @@ namespace Parking_Zone.MVC
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -38,12 +38,18 @@ namespace Parking_Zone.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
-
+                
             app.UseAuthorization();
-
+               
+            app.MapControllerRoute(
+                name: "Admin",
+                pattern: "{area:exists}/{controller=ParkingZones}/{action=Index}/{id?}"
+            );
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
             app.MapRazorPages();
 
             app.Run();
