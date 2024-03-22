@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parking_Zone.MVC.Models
+namespace Parking_Zone.Domain.Entities
 {
     public class ParkingZone : Auditable
     {

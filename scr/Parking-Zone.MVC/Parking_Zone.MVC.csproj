@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Parking_Zone.MVC-9d5ab907-10b1-4587-a76a-070d6fa1184c</UserSecretsId>
     <RootNamespace>Parking_Zone.MVC</RootNamespace>
@@ -24,6 +24,10 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Parking-Zone.Data\Parking_Zone.Data.csproj" />
   </ItemGroup>
 
 </Project>

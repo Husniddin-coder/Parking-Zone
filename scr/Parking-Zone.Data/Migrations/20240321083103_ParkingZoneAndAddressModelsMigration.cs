@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Parking_Zone.MVC.Data.Migrations
+namespace Parking_Zone.Data.Migrations
 {
     /// <inheritdoc />
     public partial class ParkingZoneAndAddressModelsMigration : Migration

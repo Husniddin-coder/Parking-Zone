@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Parking_Zone.MVC.Data.Migrations
+namespace Parking_Zone.Data.Migrations
 {
     /// <inheritdoc />
     public partial class ParkingZoneEditedMigration : Migration
