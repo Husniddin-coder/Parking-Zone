@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
-namespace Parking_Zone.MVC.Data.Migrations
+namespace Parking_Zone.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

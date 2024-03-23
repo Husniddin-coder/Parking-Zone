@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parking-Zone.MVC", "Parking-Zone.MVC\Parking-Zone.MVC.csproj", "{4182572F-2A61-4333-A799-EEF0A01426E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parking_Zone.MVC", "Parking-Zone.MVC\Parking_Zone.MVC.csproj", "{4182572F-2A61-4333-A799-EEF0A01426E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parking_Zone.Domain", "Parking-Zone.Domain\Parking_Zone.Domain.csproj", "{49E4B189-F0B4-4DB7-9DDB-A4665DDC16C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parking_Zone.Data", "Parking-Zone.Data\Parking_Zone.Data.csproj", "{8FE293E6-B9E4-497E-82B1-E1A90DB2280E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{4182572F-2A61-4333-A799-EEF0A01426E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4182572F-2A61-4333-A799-EEF0A01426E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4182572F-2A61-4333-A799-EEF0A01426E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E4B189-F0B4-4DB7-9DDB-A4665DDC16C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E4B189-F0B4-4DB7-9DDB-A4665DDC16C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E4B189-F0B4-4DB7-9DDB-A4665DDC16C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E4B189-F0B4-4DB7-9DDB-A4665DDC16C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE293E6-B9E4-497E-82B1-E1A90DB2280E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE293E6-B9E4-497E-82B1-E1A90DB2280E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE293E6-B9E4-497E-82B1-E1A90DB2280E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE293E6-B9E4-497E-82B1-E1A90DB2280E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
