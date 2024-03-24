@@ -1,30 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Parking_Zone.Data.IRepositories;
 using Parking_Zone.Domain.Entities;
+using Parking_Zone.Service.Interfaces;
 namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 
 [Authorize]
 [Area("Admin")]
 public class ParkingZonesController : Controller
 {
-    private readonly IRepository<ParkingZone> _parkingZoneRepository;
-    private readonly IRepository<Address> _addressRepository; // I need to delete address from database
+    private readonly IParkingZoneService _parkingZoneService;
 
-    public ParkingZonesController(IRepository<ParkingZone> parkingZoneRepository, IRepository<Address> addressRepository)
+    public ParkingZonesController(IParkingZoneService parkingZoneService)
     {
-        _parkingZoneRepository = parkingZoneRepository;
-        _addressRepository = addressRepository;
+
+        _parkingZoneService = parkingZoneService;
     }
 
     // GET: Admin/ParkingZones
     public async Task<IActionResult> Index()
     {
-        return View(await _parkingZoneRepository
-            .GetAllAsync()
-            .Include(x => x.Address)
-            .ToListAsync());
+        return View(await _parkingZoneService.RetrieveAllAsync());
     }
 
     // GET: Admin/ParkingZones/Details/5
@@ -33,11 +29,7 @@ public class ParkingZonesController : Controller
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneRepository
-            .GetAllAsync()
-            .Where(x => x.Id == id)
-            .Include(x => x.Address)
-            .FirstOrDefaultAsync();
+        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
 
         if (parkingZone == null)
             return NotFound();
@@ -58,9 +50,7 @@ public class ParkingZonesController : Controller
     {
         if (ModelState.IsValid)
         {
-            parkingZone.UpdateAt = DateTime.Now;
-            parkingZone.Address.UpdateAt = DateTime.Now;
-            await _parkingZoneRepository.CreateAsync(parkingZone);
+            await _parkingZoneService.InsertAsync(parkingZone);
 
             return RedirectToAction(nameof(Index));
         }
@@ -73,11 +63,7 @@ public class ParkingZonesController : Controller
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneRepository
-            .GetAllAsync()
-            .Where(x => x.Id == id)
-            .Include(x => x.Address)
-            .FirstOrDefaultAsync();
+        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
 
         if (parkingZone == null)
             return NotFound();
@@ -97,23 +83,7 @@ public class ParkingZonesController : Controller
         {
             try
             {
-                var existingZone = await _parkingZoneRepository
-                    .GetAllAsync()
-                    .Where(x => x.Id == id)
-                    .Include(x => x.Address)
-                    .FirstOrDefaultAsync();
-
-                existingZone.Name = parkingZone.Name;
-
-                existingZone.Address.Street = parkingZone.Address.Street;
-                existingZone.Address.City = parkingZone.Address.City;
-                existingZone.Address.Country = parkingZone.Address.Country;
-                existingZone.Address.PostalCode = parkingZone.Address.PostalCode;
-                existingZone.Address.Province = parkingZone.Address.Province;
-
-                existingZone.UpdateAt = DateTime.Now;
-                existingZone.Address.UpdateAt = DateTime.Now;
-                await _parkingZoneRepository.UpdateAsync(existingZone);
+                await _parkingZoneService.ModifyAsync(id, parkingZone);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -133,12 +103,7 @@ public class ParkingZonesController : Controller
         if (id == null)
             return NotFound();
 
-
-        var parkingZone = await _parkingZoneRepository
-            .GetAllAsync()
-            .Where(x => x.Id == id)
-            .Include(x => x.Address)
-            .FirstOrDefaultAsync();
+        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
         if (parkingZone == null)
             return NotFound();
 
@@ -150,19 +115,18 @@ public class ParkingZonesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(long id)
     {
-        var parkingZone = await _parkingZoneRepository
-            .GetAsync(id);
-
-        if (parkingZone != null)
-            await _parkingZoneRepository.DeleteAsync(id);
-
-        await _addressRepository.DeleteAsync(parkingZone.AddressId);
+        await _parkingZoneService.RemoveAsync(id);
 
         return RedirectToAction(nameof(Index));
     }
 
     private bool ParkingZoneExists(long id)
     {
-        return _parkingZoneRepository.GetAllAsync().Any(e => e.Id == id);
+        var park = _parkingZoneService.RetrieveByIdAsync(id);
+
+        if (park == null)
+            return false;
+
+        return true;
     }
 }

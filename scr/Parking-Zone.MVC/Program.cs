@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Parking_Zone.Data;
 using Parking_Zone.MVC.Extensions;
+using Parking_Zone.Service.Mappers;
 
 namespace Parking_Zone.MVC
 {
@@ -21,6 +22,8 @@ namespace Parking_Zone.MVC
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
 
