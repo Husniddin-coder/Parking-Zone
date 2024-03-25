@@ -9,7 +9,7 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
@@ -20,3 +20,111 @@ html {
 body {
   margin-bottom: 60px;
 }
+.form-group {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.button-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap onto new lines */
+    gap: 10px; /* Add space between buttons */
+}
+.button-container .btn {
+    width: 100px;
+    flex-grow: 1;
+    margin-right: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+/* Button colors */
+.btn-edit {
+    background-color: #007bff; /* Blue */
+    color: #fff; /* White */
+}
+
+.btn-details {
+    background-color: #28a745; /* Green */
+    color: #fff; /* White */
+}
+#btn btn-delete {
+    background-color: #dc3545; /* Red */
+    color: #fff; /* White */
+}
+.btn-delete {
+    background-color: #dc3545; /* Red */
+    color: #fff; /* White */
+}
+
+/* Hover effect */
+.button-container .btn:hover {
+    filter: brightness(0.8);
+}
+
+.table tr:hover {
+    background-color: #ddd;
+}
+
+@media (max-width: 576px) {
+    .button-container {
+        flex-direction: column; /* Change to vertical layout */
+    }
+
+    .button-container .btn {
+        width: calc(100% - 20px);
+    }
+
+    .button-container .btn:not(:last-child) {
+        margin-bottom: 5px; /* Reduce space between buttons */
+    }
+}
+

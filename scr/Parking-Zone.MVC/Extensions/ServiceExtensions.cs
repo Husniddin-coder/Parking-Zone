@@ -1,5 +1,7 @@
 ﻿using Parking_Zone.Data.IRepositories;
 using Parking_Zone.Data.Repositories;
+using Parking_Zone.Service.Interfaces;
+using Parking_Zone.Service.Services;
 
 namespace Parking_Zone.MVC.Extensions;
 
@@ -10,5 +12,8 @@ public static class ServiceExtensions
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IParkingZoneRepository, ParkingZoneRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
+
+        //services
+        services.AddScoped<IParkingZoneService,ParkingZoneService>();
     }
 }
