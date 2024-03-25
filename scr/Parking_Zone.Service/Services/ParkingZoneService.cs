@@ -78,7 +78,6 @@ public class ParkingZoneService : IParkingZoneService
 
 
         var NewPZ = _mapper.Map(parkingZone, existingZone);
-        existingZone.AddressId = id;
         existingZone.UpdateAt = DateTime.Now;
         existingZone.Address.UpdateAt = DateTime.Now;
         await _parkingZoneRepository.UpdateAsync(existingZone);
