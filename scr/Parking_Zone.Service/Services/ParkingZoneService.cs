@@ -21,66 +21,66 @@ public class ParkingZoneService : IParkingZoneService
         _addressRepository = addressRepository;
     }
 
-    public async Task<ParkingZone> InsertAsync(ParkingZone parkingZone)
+    public ParkingZone Insert(ParkingZone parkingZone)
     {
-        var existPZ = await _parkingZoneRepository
-            .GetAllAsync()
+        var existPZ =  _parkingZoneRepository
+            .GetAll()
             .Where(x => x.Name == parkingZone.Name)
-            .FirstOrDefaultAsync();
+            .FirstOrDefault();
 
         if (existPZ != null)
             throw new ParkingZoneException(409, "Parking Zone already exists");
         parkingZone.UpdateAt = DateTime.Now;
         parkingZone.Address.UpdateAt = DateTime.Now;
-        return await _parkingZoneRepository.CreateAsync(parkingZone);
+        return _parkingZoneRepository.Create(parkingZone);
     }
 
-    public async Task<bool> RemoveAsync(long id)
+    public bool Remove(long id)
     {
-        var parkingZone = await _parkingZoneRepository
-            .GetAsync(id);
+        var parkingZone = _parkingZoneRepository
+            .Get(id);
 
         if (parkingZone != null)
-            await _parkingZoneRepository.DeleteAsync(id);
+             _parkingZoneRepository.Delete(id);
 
-        return await _addressRepository.DeleteAsync(parkingZone.AddressId);
+        return  _addressRepository.Delete(parkingZone.AddressId);
     }
 
-    public async Task<IEnumerable<ParkingZone>> RetrieveAllAsync()
+    public IEnumerable<ParkingZone> RetrieveAll()
     {
-        return await _parkingZoneRepository
-             .GetAllAsync()
+        return _parkingZoneRepository
+             .GetAll()
              .Include(x => x.Address)
              .AsNoTracking()
-             .ToListAsync();
+             .ToList();
     }
 
-    public async Task<ParkingZone> RetrieveByIdAsync(long? id)
+    public ParkingZone RetrieveById(long? id)
     {
-        return await _parkingZoneRepository
-            .GetAllAsync()
+        return  _parkingZoneRepository
+            .GetAll()
             .Where(x => x.Id == id)
             .Include(a => a.Address)
-            .FirstOrDefaultAsync();
+            .FirstOrDefault();
     }
 
-    public async Task<ParkingZone> ModifyAsync(long id, ParkingZone parkingZone)
+    public ParkingZone Modify(long id, ParkingZone parkingZone)
     {
         if (id != parkingZone.Id)
             throw new ParkingZoneException(404, "Parking Zone is not found");
 
-        var existingZone = await _parkingZoneRepository
-            .GetAllAsync()
+        var existingZone = _parkingZoneRepository
+            .GetAll()
             .Where(x => x.Id == id)
             .Include(a => a.Address)
-            .FirstOrDefaultAsync();
+            .FirstOrDefault();
 
 
 
         var NewPZ = _mapper.Map(parkingZone, existingZone);
         existingZone.UpdateAt = DateTime.Now;
         existingZone.Address.UpdateAt = DateTime.Now;
-        await _parkingZoneRepository.UpdateAsync(existingZone);
+        _parkingZoneRepository.Update(existingZone);
 
         return NewPZ;
     }

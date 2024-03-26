@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Parking_Zone.Domain.Entities.ParkingZone>
+﻿@model ParkingZoneIndexVM
 
 @{
     ViewData["Title"] = "Index";
@@ -13,34 +13,34 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address.Street)
+                Street
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address.City)
+                City
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address.Province)
+                Province
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address.Country)
+                Country
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address.PostalCode)
+                PostalCode
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
+                CreatedAt
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UpdateAt)
+                UpdateAt
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ParkingZones) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
