@@ -7,7 +7,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<ParkingZone, ParkingZone>();
+        CreateMap<ParkingZone, ParkingZone>()
+            .ForMember(d => d.CreatedAt, x => x.Ignore());
         CreateMap<Address, Address>();
     }
 }

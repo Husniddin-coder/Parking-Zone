@@ -1,4 +1,4 @@
-﻿@model Parking_Zone.Domain.Entities.ParkingZone
+﻿@model ParkingZoneDetailsVM
 
 @{
     ViewData["Title"] = "Details";
@@ -11,56 +11,56 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.ParkingZone.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.ParkingZone.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Street)
+            @Html.DisplayNameFor(model => model.ParkingZone.Address.Street)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Street)
+            @Html.DisplayFor(model => model.ParkingZone.Address.Street)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.City)
+            @Html.DisplayNameFor(model => model.ParkingZone.Address.City)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.City)
+            @Html.DisplayFor(model => model.ParkingZone.Address.City)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Province)
+            @Html.DisplayNameFor(model => model.ParkingZone.Address.Province)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Province)
+            @Html.DisplayFor(model => model.ParkingZone.Address.Province)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Country)
+            @Html.DisplayNameFor(model => model.ParkingZone.Address.Country)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Country)
+            @Html.DisplayFor(model => model.ParkingZone.Address.Country)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.PostalCode)
+            @Html.DisplayNameFor(model => model.ParkingZone.Address.PostalCode)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.PostalCode)
+            @Html.DisplayFor(model => model.ParkingZone.Address.PostalCode)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            @Html.DisplayNameFor(model => model.ParkingZone.CreatedAt)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
+            @Html.DisplayFor(model => model.ParkingZone.CreatedAt)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdateAt)
+            @Html.DisplayNameFor(model => model.ParkingZone.UpdateAt)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdateAt)
+            @Html.DisplayFor(model => model.ParkingZone.UpdateAt)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.ParkingZone.Id" class="btn btn-primary">Edit</a> |
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

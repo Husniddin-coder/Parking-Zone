@@ -4,13 +4,13 @@ namespace Parking_Zone.Service.Interfaces;
 
 public interface IParkingZoneService
 {
-    Task<ParkingZone> RetrieveByIdAsync(long? id);
+    ParkingZone RetrieveById(long? id);
 
-    Task<IEnumerable<ParkingZone>> RetrieveAllAsync();
+    IEnumerable<ParkingZone> RetrieveAll();
 
-    Task<ParkingZone> InsertAsync(ParkingZone parkingZone);
+    ParkingZone Insert(ParkingZone parkingZone);
 
-    Task<ParkingZone> ModifyAsync(long id,ParkingZone parkingZone);
+    ParkingZone Modify(long id,ParkingZone parkingZone);
 
-    Task<bool> RemoveAsync(long id);
+    bool Remove(long id);
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Parking_Zone.Domain.Entities;
+using Parking_Zone.MVC.ViewModels;
 using Parking_Zone.Service.Interfaces;
 namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 
@@ -18,23 +18,29 @@ public class ParkingZonesController : Controller
     }
 
     // GET: Admin/ParkingZones
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        return View(await _parkingZoneService.RetrieveAllAsync());
+        var parkingZones = _parkingZoneService.RetrieveAll();
+        ParkingZoneIndexVM resVM = new()
+        { ParkingZones = parkingZones };
+        return View(resVM);
     }
 
     // GET: Admin/ParkingZones/Details/5
-    public async Task<IActionResult> Details(long? id)
+    public IActionResult Details(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        ParkingZoneDetailsVM resVM = new()
+        { ParkingZone = parkingZone };
+
+        return View(resVM);
     }
 
     // GET: Admin/ParkingZones/Create
@@ -46,64 +52,67 @@ public class ParkingZonesController : Controller
     // POST: Admin/ParkingZones/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ParkingZone parkingZone)
+    public IActionResult Create(ParkingZoneCreateVM createVM)
     {
         if (ModelState.IsValid)
         {
-            await _parkingZoneService.InsertAsync(parkingZone);
+            _parkingZoneService.Insert(createVM.ParkingZone);
 
             return RedirectToAction(nameof(Index));
         }
-        return View(parkingZone);
+        return View(createVM);
     }
 
     // GET: Admin/ParkingZones/Edit/5
-    public async Task<IActionResult> Edit(long? id)
+    public IActionResult Edit(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        ParkingZoneEditVM resVM = new()
+        { ParkingZone = parkingZone };
+
+        return View(resVM);
     }
 
     // POST: Admin/ParkingZones/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(long id, ParkingZone parkingZone)
+    public IActionResult Edit(long id, ParkingZoneEditVM parkingZoneEditVM)
     {
-        if (id != parkingZone.Id)
+        if (id != parkingZoneEditVM.ParkingZone.Id)
             return NotFound();
 
         if (ModelState.IsValid)
         {
             try
             {
-                await _parkingZoneService.ModifyAsync(id, parkingZone);
+                _parkingZoneService.Modify(id, parkingZoneEditVM.ParkingZone);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingZoneExists(parkingZone.Id))
+                if (!ParkingZoneExists(parkingZoneEditVM.ParkingZone.Id))
                     return NotFound();
 
                 else throw;
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(parkingZone);
+        return View(parkingZoneEditVM);
     }
 
     // GET: Admin/ParkingZones/Delete/5
-    public async Task<IActionResult> Delete(long? id)
+    public IActionResult Delete(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
         if (parkingZone == null)
             return NotFound();
 
@@ -113,16 +122,16 @@ public class ParkingZonesController : Controller
     // POST: Admin/ParkingZones/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(long id)
+    public IActionResult DeleteConfirmed(long id)
     {
-        await _parkingZoneService.RemoveAsync(id);
+        _parkingZoneService.Remove(id);
 
         return RedirectToAction(nameof(Index));
     }
 
     private bool ParkingZoneExists(long id)
     {
-        var park = _parkingZoneService.RetrieveByIdAsync(id);
+        var park = _parkingZoneService.RetrieveById(id);
 
         if (park == null)
             return false;
