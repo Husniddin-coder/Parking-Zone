@@ -10,7 +10,7 @@ public interface IRepository<T> where T : Auditable
 
     bool Delete(long id);
 
-    T Get(long id);
+    T Get(long? id);
 
     IQueryable<T> GetAll();
 }

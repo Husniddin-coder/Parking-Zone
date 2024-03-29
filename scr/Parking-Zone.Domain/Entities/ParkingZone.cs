@@ -9,6 +9,6 @@ namespace Parking_Zone.Domain.Entities
         [ForeignKey("Address")]
         public long AddressId { get; set; }
 
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
     }
 }

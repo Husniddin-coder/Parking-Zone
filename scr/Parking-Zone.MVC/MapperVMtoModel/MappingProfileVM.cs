@@ -9,6 +9,7 @@ namespace Parking_Zone.MVC.MapperVMtoModel
         public MappingProfileVM()
         {
             CreateMap<ParkingZoneEditVM, ParkingZone>()
+                .ForMember(d => d.UpdateAt, op => op.MapFrom(x => DateTime.Now))
                 .ForPath(d=> d.Address.Street, op=> op.MapFrom(x=> x.Street))
                 .ForPath(d=> d.Address.City, op=> op.MapFrom(x=> x.City))
                 .ForPath(d=> d.Address.Province, op=> op.MapFrom(x=> x.Province))
@@ -17,6 +18,7 @@ namespace Parking_Zone.MVC.MapperVMtoModel
 
             CreateMap<ParkingZoneCreateVM, ParkingZone>()
                 .ForMember(d=> d.Name, op=> op.MapFrom(x=> x.Name))
+                .ForMember(d=> d.UpdateAt, op=> op.MapFrom(x=> DateTime.Now))
                 .ForPath(d => d.Address.Street, op => op.MapFrom(x => x.Street))
                 .ForPath(d => d.Address.City, op => op.MapFrom(x => x.City))
                 .ForPath(d => d.Address.Province, op => op.MapFrom(x => x.Province))

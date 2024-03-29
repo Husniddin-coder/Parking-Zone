@@ -37,7 +37,7 @@ public class Repository<T> : IRepository<T> where T : Auditable
     public IQueryable<T> GetAll()
         => _dbSet;
 
-    public T Get(long id)
+    public T Get(long? id)
         =>  _dbSet.FirstOrDefault(e => e.Id == id);
 
     public T Update(T entity)
