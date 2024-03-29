@@ -16,35 +16,35 @@ public class Repository<T> : IRepository<T> where T : Auditable
         _dbSet = _dbcontext.Set<T>();
     }
 
-    public async Task<T> CreateAsync(T entity)
+    public T Create(T entity)
     {
-        var entry = await _dbSet.AddAsync(entity);
+        var entry =  _dbSet.Add(entity);
 
-        await _dbcontext.SaveChangesAsync();
+         _dbcontext.SaveChanges();
 
         return entry.Entity;
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public bool Delete(long id)
     {
-        var entry = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+        var entry =  _dbSet.FirstOrDefault(x => x.Id == id);
 
         _dbSet.Remove(entry);
 
-        return await _dbcontext.SaveChangesAsync() > 0;
+        return  _dbcontext.SaveChanges() > 0;
     }
 
-    public IQueryable<T> GetAllAsync()
+    public IQueryable<T> GetAll()
         => _dbSet;
 
-    public async Task<T> GetAsync(long id)
-        => await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+    public T Get(long? id)
+        =>  _dbSet.FirstOrDefault(e => e.Id == id);
 
-    public async Task<T> UpdateAsync(T entity)
+    public T Update(T entity)
     {
         var entry =  _dbcontext.Update(entity);
 
-        await _dbcontext.SaveChangesAsync();
+         _dbcontext.SaveChanges();
 
         return entry.Entity;
     }

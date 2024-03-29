@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Parking_Zone.Domain.Entities;
+using Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 using Parking_Zone.Service.Interfaces;
 namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 
@@ -10,31 +12,37 @@ namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 public class ParkingZonesController : Controller
 {
     private readonly IParkingZoneService _parkingZoneService;
+    private readonly IMapper _mapper;
 
-    public ParkingZonesController(IParkingZoneService parkingZoneService)
+    public ParkingZonesController(IParkingZoneService parkingZoneService, IMapper mapper)
     {
-
         _parkingZoneService = parkingZoneService;
+        _mapper = mapper;
     }
 
     // GET: Admin/ParkingZones
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        return View(await _parkingZoneService.RetrieveAllAsync());
+        var parkingZones = _parkingZoneService.RetrieveAll();
+        ParkingZoneIndexVM resVM = new()
+        { ParkingZones = parkingZones };
+        return View(resVM);
     }
 
     // GET: Admin/ParkingZones/Details/5
-    public async Task<IActionResult> Details(long? id)
+    public IActionResult Details(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        ParkingZoneDetailsVM resVM = new();
+
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // GET: Admin/ParkingZones/Create
@@ -46,83 +54,89 @@ public class ParkingZonesController : Controller
     // POST: Admin/ParkingZones/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ParkingZone parkingZone)
+    public IActionResult Create(ParkingZoneCreateVM createVM)
     {
         if (ModelState.IsValid)
         {
-            await _parkingZoneService.InsertAsync(parkingZone);
+            var parkingZone = new ParkingZone();
+            _parkingZoneService.Insert(_mapper.Map(createVM,parkingZone));
 
             return RedirectToAction(nameof(Index));
         }
-        return View(parkingZone);
+        return View(createVM);
     }
 
     // GET: Admin/ParkingZones/Edit/5
-    public async Task<IActionResult> Edit(long? id)
+    public IActionResult Edit(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        ParkingZoneEditVM resVM = new();
+
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // POST: Admin/ParkingZones/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(long id, ParkingZone parkingZone)
+    public IActionResult Edit(long id, ParkingZoneEditVM parkingZoneEditVM)
     {
-        if (id != parkingZone.Id)
+        if (id != parkingZoneEditVM.Id)
             return NotFound();
 
         if (ModelState.IsValid)
         {
             try
             {
-                await _parkingZoneService.ModifyAsync(id, parkingZone);
+                var parkingZone = _parkingZoneService.RetrieveById(id);
+                _parkingZoneService.Modify(id, _mapper.Map(parkingZoneEditVM,parkingZone));
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingZoneExists(parkingZone.Id))
+                if (!ParkingZoneExists(parkingZoneEditVM.Id))
                     return NotFound();
 
                 else throw;
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(parkingZone);
+        return View(parkingZoneEditVM);
     }
 
     // GET: Admin/ParkingZones/Delete/5
-    public async Task<IActionResult> Delete(long? id)
+    public IActionResult Delete(long? id)
     {
         if (id == null)
             return NotFound();
 
-        var parkingZone = await _parkingZoneService.RetrieveByIdAsync(id);
+        var parkingZone = _parkingZoneService.RetrieveById(id);
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        var resVM = new ParkingZoneDeleteVM();
+
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // POST: Admin/ParkingZones/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(long id)
+    public IActionResult DeleteConfirmed(long id)
     {
-        await _parkingZoneService.RemoveAsync(id);
+        _parkingZoneService.Remove(id);
 
         return RedirectToAction(nameof(Index));
     }
 
     private bool ParkingZoneExists(long id)
     {
-        var park = _parkingZoneService.RetrieveByIdAsync(id);
+        var park = _parkingZoneService.RetrieveById(id);
 
         if (park == null)
             return false;

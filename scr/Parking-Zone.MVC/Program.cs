@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Parking_Zone.Data;
 using Parking_Zone.MVC.Extensions;
-using Parking_Zone.Service.Mappers;
+using Parking_Zone.MVC.MapperVMtoModel;
 
 namespace Parking_Zone.MVC
 {
@@ -14,7 +14,10 @@ namespace Parking_Zone.MVC
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(connectionString));
+            {
+                options.UseSqlServer(connectionString);
+                options.UseLazyLoadingProxies();
+            });
             builder.Services.AddCustomServices();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -23,7 +26,7 @@ namespace Parking_Zone.MVC
                             .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddAutoMapper(typeof(MappingProfileVM));
 
             var app = builder.Build();
 

@@ -4,13 +4,13 @@ namespace Parking_Zone.Data.IRepositories;
 
 public interface IRepository<T> where T : Auditable
 {
-    Task<T> CreateAsync(T entity);
+    T Create(T entity);
 
-    Task<T> UpdateAsync(T entity);
+    T Update(T entity);
 
-    Task<bool> DeleteAsync(long id);
+    bool Delete(long id);
 
-    Task<T> GetAsync(long id);
+    T Get(long? id);
 
-    IQueryable<T> GetAllAsync();
+    IQueryable<T> GetAll();
 }

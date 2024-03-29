@@ -14,6 +14,7 @@ public static class ServiceExtensions
         services.AddScoped<IAddressRepository, AddressRepository>();
 
         //services
+        services.AddScoped(typeof(IService<>), typeof(Service<>));
         services.AddScoped<IParkingZoneService,ParkingZoneService>();
     }
 }
