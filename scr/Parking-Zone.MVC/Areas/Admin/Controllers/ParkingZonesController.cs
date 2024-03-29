@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Parking_Zone.MVC.ViewModels;
+using Parking_Zone.Domain.Entities;
+using Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 using Parking_Zone.Service.Interfaces;
 namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 
@@ -10,11 +12,12 @@ namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 public class ParkingZonesController : Controller
 {
     private readonly IParkingZoneService _parkingZoneService;
+    private readonly IMapper _mapper;
 
-    public ParkingZonesController(IParkingZoneService parkingZoneService)
+    public ParkingZonesController(IParkingZoneService parkingZoneService, IMapper mapper)
     {
-
         _parkingZoneService = parkingZoneService;
+        _mapper = mapper;
     }
 
     // GET: Admin/ParkingZones
@@ -37,10 +40,9 @@ public class ParkingZonesController : Controller
         if (parkingZone == null)
             return NotFound();
 
-        ParkingZoneDetailsVM resVM = new()
-        { ParkingZone = parkingZone };
+        ParkingZoneDetailsVM resVM = new();
 
-        return View(resVM);
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // GET: Admin/ParkingZones/Create
@@ -56,7 +58,8 @@ public class ParkingZonesController : Controller
     {
         if (ModelState.IsValid)
         {
-            _parkingZoneService.Insert(createVM.ParkingZone);
+            var parkingZone = new ParkingZone();
+            _parkingZoneService.Insert(_mapper.Map(createVM,parkingZone));
 
             return RedirectToAction(nameof(Index));
         }
@@ -74,10 +77,9 @@ public class ParkingZonesController : Controller
         if (parkingZone == null)
             return NotFound();
 
-        ParkingZoneEditVM resVM = new()
-        { ParkingZone = parkingZone };
+        ParkingZoneEditVM resVM = new();
 
-        return View(resVM);
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // POST: Admin/ParkingZones/Edit/5
@@ -85,18 +87,19 @@ public class ParkingZonesController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Edit(long id, ParkingZoneEditVM parkingZoneEditVM)
     {
-        if (id != parkingZoneEditVM.ParkingZone.Id)
+        if (id != parkingZoneEditVM.Id)
             return NotFound();
 
         if (ModelState.IsValid)
         {
             try
             {
-                _parkingZoneService.Modify(id, parkingZoneEditVM.ParkingZone);
+                var parkingZone = _parkingZoneService.RetrieveById(id);
+                _parkingZoneService.Modify(id, _mapper.Map(parkingZoneEditVM,parkingZone));
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingZoneExists(parkingZoneEditVM.ParkingZone.Id))
+                if (!ParkingZoneExists(parkingZoneEditVM.Id))
                     return NotFound();
 
                 else throw;
@@ -116,7 +119,9 @@ public class ParkingZonesController : Controller
         if (parkingZone == null)
             return NotFound();
 
-        return View(parkingZone);
+        var resVM = new ParkingZoneDeleteVM();
+
+        return View(_mapper.Map(parkingZone,resVM));
     }
 
     // POST: Admin/ParkingZones/Delete/5

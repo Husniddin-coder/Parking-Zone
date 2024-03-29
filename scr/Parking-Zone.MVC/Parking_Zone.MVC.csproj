@@ -22,11 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Parking-Zone.Data\Parking_Zone.Data.csproj" />
     <ProjectReference Include="..\Parking_Zone.Service\Parking_Zone.Service.csproj" />
   </ItemGroup>

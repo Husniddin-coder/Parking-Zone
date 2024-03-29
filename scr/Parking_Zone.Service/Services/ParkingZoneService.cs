@@ -12,12 +12,12 @@ public class ParkingZoneService : IParkingZoneService
 {
     private readonly IRepository<ParkingZone> _parkingZoneRepository;
     private readonly IRepository<Address> _addressRepository;
-    private readonly IMapper _mapper;
 
-    public ParkingZoneService(IRepository<ParkingZone> parkingZoneRepository, IMapper mapper, IRepository<Address> addressRepository)
+    public ParkingZoneService(
+        IRepository<ParkingZone> parkingZoneRepository, 
+        IRepository<Address> addressRepository)
     {
         _parkingZoneRepository = parkingZoneRepository;
-        _mapper = mapper;
         _addressRepository = addressRepository;
     }
 
@@ -66,22 +66,12 @@ public class ParkingZoneService : IParkingZoneService
 
     public ParkingZone Modify(long id, ParkingZone parkingZone)
     {
-        if (id != parkingZone.Id)
+        if (id != parkingZone.Id && parkingZone is null)
             throw new ParkingZoneException(404, "Parking Zone is not found");
 
-        var existingZone = _parkingZoneRepository
-            .GetAll()
-            .Where(x => x.Id == id)
-            .Include(a => a.Address)
-            .FirstOrDefault();
-
-
-
-        var NewPZ = _mapper.Map(parkingZone, existingZone);
-        existingZone.UpdateAt = DateTime.Now;
-        existingZone.Address.UpdateAt = DateTime.Now;
-        _parkingZoneRepository.Update(existingZone);
-
-        return NewPZ;
+        parkingZone.UpdateAt = DateTime.Now;
+        parkingZone.Address.UpdateAt = DateTime.Now;
+        
+        return _parkingZoneRepository.Update(parkingZone);
     }
 }
