@@ -1,9 +1,8 @@
 ﻿using Parking_Zone.Domain.Entities;
 
-namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs
+namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
+
+public class ParkingZoneIndexVM
 {
-    public class ParkingZoneIndexVM
-    {
-        public IEnumerable<ParkingZone> ParkingZones { get; set; }
-    }
+    public IEnumerable<ParkingZone> ParkingZones { get; set; }
 }

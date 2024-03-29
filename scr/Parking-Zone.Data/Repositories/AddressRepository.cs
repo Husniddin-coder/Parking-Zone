@@ -5,6 +5,6 @@ namespace Parking_Zone.Data.Repositories;
 
 public class AddressRepository : Repository<Address> , IAddressRepository
 {
-    public AddressRepository(ApplicationDbContext options) : base(options)
+    public AddressRepository(ApplicationDbContext context) : base(context)
     { }
 }

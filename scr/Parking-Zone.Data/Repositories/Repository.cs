@@ -18,33 +18,33 @@ public class Repository<T> : IRepository<T> where T : Auditable
 
     public T Create(T entity)
     {
-        var entry =  _dbSet.Add(entity);
+        var entry = _dbSet.Add(entity);
 
-         _dbcontext.SaveChanges();
+        _dbcontext.SaveChanges();
 
         return entry.Entity;
     }
 
     public bool Delete(long id)
     {
-        var entry =  _dbSet.FirstOrDefault(x => x.Id == id);
+        var entry = _dbSet.FirstOrDefault(x => x.Id == id);
 
         _dbSet.Remove(entry);
 
-        return  _dbcontext.SaveChanges() > 0;
+        return _dbcontext.SaveChanges() > 0;
     }
 
     public IQueryable<T> GetAll()
         => _dbSet;
 
     public T Get(long? id)
-        =>  _dbSet.FirstOrDefault(e => e.Id == id);
+        => _dbSet.FirstOrDefault(e => e.Id == id);
 
     public T Update(T entity)
     {
-        var entry =  _dbcontext.Update(entity);
+        var entry = _dbcontext.Update(entity);
 
-         _dbcontext.SaveChanges();
+        _dbcontext.SaveChanges();
 
         return entry.Entity;
     }

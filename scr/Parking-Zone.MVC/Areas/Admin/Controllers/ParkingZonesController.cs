@@ -32,9 +32,6 @@ public class ParkingZonesController : Controller
     // GET: Admin/ParkingZones/Details/5
     public IActionResult Details(long? id)
     {
-        if (id == null)
-            return NotFound();
-
         var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
@@ -42,7 +39,7 @@ public class ParkingZonesController : Controller
 
         ParkingZoneDetailsVM resVM = new();
 
-        return View(_mapper.Map(parkingZone,resVM));
+        return View(_mapper.Map(parkingZone, resVM));
     }
 
     // GET: Admin/ParkingZones/Create
@@ -59,7 +56,7 @@ public class ParkingZonesController : Controller
         if (ModelState.IsValid)
         {
             var parkingZone = new ParkingZone();
-            _parkingZoneService.Insert(_mapper.Map(createVM,parkingZone));
+            _parkingZoneService.Insert(_mapper.Map(createVM, parkingZone));
 
             return RedirectToAction(nameof(Index));
         }
@@ -69,9 +66,6 @@ public class ParkingZonesController : Controller
     // GET: Admin/ParkingZones/Edit/5
     public IActionResult Edit(long? id)
     {
-        if (id == null)
-            return NotFound();
-
         var parkingZone = _parkingZoneService.RetrieveById(id);
 
         if (parkingZone == null)
@@ -79,7 +73,7 @@ public class ParkingZonesController : Controller
 
         ParkingZoneEditVM resVM = new();
 
-        return View(_mapper.Map(parkingZone,resVM));
+        return View(_mapper.Map(parkingZone, resVM));
     }
 
     // POST: Admin/ParkingZones/Edit/5
@@ -95,7 +89,7 @@ public class ParkingZonesController : Controller
             try
             {
                 var parkingZone = _parkingZoneService.RetrieveById(id);
-                _parkingZoneService.Modify(id, _mapper.Map(parkingZoneEditVM,parkingZone));
+                _parkingZoneService.Modify(_mapper.Map(parkingZoneEditVM, parkingZone));
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -112,16 +106,13 @@ public class ParkingZonesController : Controller
     // GET: Admin/ParkingZones/Delete/5
     public IActionResult Delete(long? id)
     {
-        if (id == null)
-            return NotFound();
-
         var parkingZone = _parkingZoneService.RetrieveById(id);
         if (parkingZone == null)
             return NotFound();
 
         var resVM = new ParkingZoneDeleteVM();
 
-        return View(_mapper.Map(parkingZone,resVM));
+        return View(_mapper.Map(parkingZone, resVM));
     }
 
     // POST: Admin/ParkingZones/Delete/5
@@ -129,6 +120,10 @@ public class ParkingZonesController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(long id)
     {
+        var existingParkingZone = _parkingZoneService.RetrieveById(id);
+        if (existingParkingZone == null)
+            return NotFound();
+
         _parkingZoneService.Remove(id);
 
         return RedirectToAction(nameof(Index));
