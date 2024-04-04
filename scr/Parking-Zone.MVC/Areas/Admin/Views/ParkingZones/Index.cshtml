@@ -1,4 +1,4 @@
-﻿@model ParkingZoneIndexVM
+﻿@model IEnumerable<ListOfItemsVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -40,31 +40,31 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ParkingZones) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.Street)
+                @Html.DisplayFor(modelItem => item.Street)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.City)
+                @Html.DisplayFor(modelItem => item.City)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.Province)
+                @Html.DisplayFor(modelItem => item.Province)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.Country)
+                @Html.DisplayFor(modelItem => item.Country)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.PostalCode)
+                @Html.DisplayFor(modelItem => item.PostalCode)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
             </td>
             <td>
                 <div class="button-container">

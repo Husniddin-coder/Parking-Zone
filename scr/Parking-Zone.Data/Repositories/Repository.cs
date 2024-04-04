@@ -34,7 +34,7 @@ public class Repository<T> : IRepository<T> where T : Auditable
         return _dbcontext.SaveChanges() > 0;
     }
 
-    public IQueryable<T> GetAll()
+    public IEnumerable<T> GetAll()
         => _dbSet;
 
     public T Get(long? id)
