@@ -22,7 +22,7 @@ public class ParkingZonesController : Controller
     public IActionResult Index()
     {
         var parkingZones = _parkingZoneService.RetrieveAll();
-        var VMs = new ListOfItemsVM().MapToVM(parkingZones);
+        var VMs = parkingZones.Select(x=> new ListOfItemsVM(x));
         return View(VMs);
     }
 

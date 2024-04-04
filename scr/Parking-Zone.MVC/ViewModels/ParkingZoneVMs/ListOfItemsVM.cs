@@ -22,20 +22,17 @@ public class ListOfItemsVM
 
     public DateTime? UpdatedAt { get; set; }
 
-    public IEnumerable<ListOfItemsVM> MapToVM(IEnumerable<ParkingZone> parkingZones)
+    public ListOfItemsVM(ParkingZone parkingZone)
     {
-        return parkingZones.Select(parkingZone => new ListOfItemsVM()
-        {
-            Id = parkingZone.Id,
-            Name = parkingZone.Name,
-            Street = parkingZone.Address.Street,
-            City = parkingZone.Address.City,
-            Province = parkingZone.Address.Province,
-            Country = parkingZone.Address.Country,
-            PostalCode = parkingZone.Address.PostalCode,
-            CreatedAt = parkingZone.CreatedAt,
-            UpdatedAt = parkingZone.UpdateAt
-        });
+        Id = parkingZone.Id;
+        Name = parkingZone.Name;
+        Street = parkingZone.Address.Street;
+        City = parkingZone.Address.City;
+        Country = parkingZone.Address.Country;
+        Province = parkingZone.Address.Province;
+        PostalCode = parkingZone.Address.PostalCode;
+        CreatedAt = parkingZone.CreatedAt;
+        UpdatedAt = parkingZone.UpdateAt;
     }
 
 }
