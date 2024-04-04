@@ -8,9 +8,9 @@ public interface IService<T> where T : Auditable
 
     IEnumerable<T> RetrieveAll();
 
-    T Insert(T entity);
+    void Insert(T entity);
 
-    T Modify(long id, T entity);
+    void Modify(T entity);
 
-    bool Remove(long id);
+    void Remove(long id);
 }

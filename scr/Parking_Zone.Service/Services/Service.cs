@@ -9,19 +9,18 @@ public class Service<T> : IService<T> where T : Auditable
     private readonly IRepository<T> _repository;
 
     public Service(IRepository<T> repository)
-    {
-        _repository = repository;
-    }
+     => _repository = repository;
+    
 
-    public T Insert(T entity)
+    public virtual void Insert(T entity)
      => _repository.Create(entity);
 
 
-    public T Modify(long id, T entity)
+    public void Modify(T entity)
      => _repository.Update(entity);
 
 
-    public bool Remove(long id)
+    public void Remove(long id)
      => _repository.Delete(id);
 
     public IEnumerable<T> RetrieveAll()

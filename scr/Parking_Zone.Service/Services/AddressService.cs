@@ -4,16 +4,15 @@ using Parking_Zone.Service.Interfaces;
 
 namespace Parking_Zone.Service.Services;
 
-public class ParkingZoneService : Service<ParkingZone>, IParkingZoneService
+public class AddressService : Service<Address>, IAddressService
 {
-    public ParkingZoneService(IParkingZoneRepository repository)
+    public AddressService(IAddressRepository repository)
         : base(repository)
     { }
 
-    public override void Insert(ParkingZone entity)
+    public override void Insert(Address entity)
     {
         entity.UpdateAt = DateTime.Now;
-        entity.Address.UpdateAt = DateTime.Now;
         base.Insert(entity);
     }
 }

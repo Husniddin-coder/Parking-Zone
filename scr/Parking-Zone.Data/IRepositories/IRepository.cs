@@ -12,5 +12,5 @@ public interface IRepository<T> where T : Auditable
 
     T Get(long? id);
 
-    IQueryable<T> GetAll();
+    IEnumerable<T> GetAll();
 }

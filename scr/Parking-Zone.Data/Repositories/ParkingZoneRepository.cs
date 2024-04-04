@@ -5,6 +5,6 @@ namespace Parking_Zone.Data.Repositories;
 
 public class ParkingZoneRepository : Repository<ParkingZone> , IParkingZoneRepository
 {
-    public ParkingZoneRepository(ApplicationDbContext options) : base(options)
+    public ParkingZoneRepository(ApplicationDbContext context) : base(context)
     { }
 }

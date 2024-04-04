@@ -9,12 +9,12 @@ public static class ServiceExtensions
 {
     public static void AddCustomServices(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        //repositories
         services.AddScoped<IParkingZoneRepository, ParkingZoneRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
 
         //services
-        services.AddScoped(typeof(IService<>), typeof(Service<>));
         services.AddScoped<IParkingZoneService,ParkingZoneService>();
+        services.AddScoped<IAddressService, AddressService>();
     }
 }
