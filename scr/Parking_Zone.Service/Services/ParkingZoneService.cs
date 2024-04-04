@@ -6,7 +6,7 @@ namespace Parking_Zone.Service.Services;
 
 public class ParkingZoneService : Service<ParkingZone>, IParkingZoneService
 {
-    public ParkingZoneService(IRepository<ParkingZone> repository)
+    public ParkingZoneService(IParkingZoneRepository repository)
         : base(repository)
     { }
 
