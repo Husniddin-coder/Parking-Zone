@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Parking-Zone.MVC\Parking_Zone.MVC.csproj" />
     <ProjectReference Include="..\Parking_Zone.Service\Parking_Zone.Service.csproj" />
   </ItemGroup>
 
