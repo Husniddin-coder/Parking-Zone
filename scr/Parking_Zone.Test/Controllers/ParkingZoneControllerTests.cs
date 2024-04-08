@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using Moq;
+using Microsoft.AspNetCore.Mvc;
 using Parking_Zone.Domain.Entities;
+using Parking_Zone.Service.Interfaces;
 using Parking_Zone.MVC.Areas.Admin.Controllers;
 using Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
-using Parking_Zone.Service.Interfaces;
 
 namespace Parking_Zone.Test.Controllers;
 
@@ -13,8 +13,9 @@ public class ParkingZoneControllerTests
     private readonly Mock<IAddressService> _addressServiceMock;
     private readonly ParkingZonesController _parkingController;
     private readonly ParkingZone _parkingZoneTest;
-    private readonly CreateVM createVM = new();
     private readonly ParkingZone? nullPZ = null;
+    private readonly CreateVM createVM = new();
+    private readonly EditVM editVM = new();
     private readonly long Id = 1;
 
     public ParkingZoneControllerTests()
@@ -165,7 +166,6 @@ public class ParkingZoneControllerTests
     {
         //Arrange
         ParkingZone existParkZone = new() { Id = 2 };
-        EditVM editVM = new();
         _parkingServiceMock.Setup(x => x.RetrieveById(Id)).Returns(existParkZone);
 
         //Act
@@ -183,7 +183,6 @@ public class ParkingZoneControllerTests
     {
         //Arrange
         _parkingZoneTest.Id = 1;
-        EditVM editVM = new();
         _parkingServiceMock.Setup(x => x.RetrieveById(Id)).Returns(_parkingZoneTest);
         _parkingController.ModelState.AddModelError("Name", "Required");
 
@@ -203,7 +202,6 @@ public class ParkingZoneControllerTests
     {
         //Arrange
         _parkingZoneTest.Id = 1;
-        EditVM editVM = new();
         _parkingServiceMock.Setup(x => x.RetrieveById(Id)).Returns(_parkingZoneTest);
         _parkingServiceMock.Setup(x => x.Modify(_parkingZoneTest));
 

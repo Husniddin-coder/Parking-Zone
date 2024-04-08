@@ -1,8 +1,8 @@
 ﻿using Moq;
-using Parking_Zone.Data.IRepositories;
 using Parking_Zone.Domain.Entities;
-using Parking_Zone.Service.Interfaces;
 using Parking_Zone.Service.Services;
+using Parking_Zone.Data.IRepositories;
+using Parking_Zone.Service.Interfaces;
 
 namespace Parking_Zone.Test.Services;
 
