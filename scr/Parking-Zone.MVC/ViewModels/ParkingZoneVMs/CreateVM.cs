@@ -1,4 +1,5 @@
 ﻿using Parking_Zone.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 

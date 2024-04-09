@@ -16,7 +16,7 @@ public class Service<T> : IService<T> where T : Auditable
      => _repository.Create(entity);
 
 
-    public void Modify(T entity)
+    public void Update(T entity)
      => _repository.Update(entity);
 
 

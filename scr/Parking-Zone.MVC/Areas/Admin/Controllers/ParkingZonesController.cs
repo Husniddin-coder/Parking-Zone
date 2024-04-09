@@ -86,7 +86,7 @@ public class ParkingZonesController : Controller
         {
             try
             {
-                _parkingZoneService.Modify(parkingZoneEditVM.MapToModel(existingParkingZone));
+                _parkingZoneService.Update(parkingZoneEditVM.MapToModel(existingParkingZone));
             }
             catch (DbUpdateConcurrencyException)
             {

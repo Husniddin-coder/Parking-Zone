@@ -4,11 +4,11 @@ namespace Parking_Zone.Data.IRepositories;
 
 public interface IRepository<T> where T : Auditable
 {
-    T Create(T entity);
+    void Create(T entity);
 
-    T Update(T entity);
+    void Update(T entity);
 
-    bool Delete(long id);
+    void Delete(long id);
 
     T Get(long? id);
 
