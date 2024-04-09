@@ -4,14 +4,13 @@ on:
   push:
   pull_request:
     branches: 
-      -'*'
+      - '*'
     
 env:
   DOTNET_VERSION: '8.x' # The .NET SDK version to use
 
 jobs:
   build-and-test:
-
     name: build-and-test-${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -19,23 +18,24 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+      - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: |
-        cd ~/scr/
-        dotnet restore
-      
-    - name: Build
-      run: |
-        cd ~/scr/
-        dotnet build --configuration Release --no-restore
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd ./.github/workflows/
+          dotnet restore
+
+      - name: Build
+        run: |
+          cd ./.github/workflows/
+          dotnet build --configuration Release --no-restore
     
-    - name: Test
-      run: |
-        cd ~/scr/
-        dotnet test --no-restore --verbosity normal
+      - name: Test
+        run: |
+          cd ./.github/workflows/
+          dotnet test --no-restore --verbosity normal
