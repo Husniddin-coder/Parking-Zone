@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
     branches:
-      - '*'
+      - main
 
 env:
   DOTNET_VERSION: '8.x' # The .NET SDK version to use
@@ -27,16 +27,14 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Restore dependencies
-      run: |
-        cd src/
-        dotnet restore
+      run: dotnet restore
 
     - name: Build Project
       run: |
-        cd src/ 
-        dotnet build --configuration Release --no-restore
+        cd src/Parking-Zone.MVC  
+        dotnet build Parking_Zone.MVC.csproj --configuration Release --no-restore
 
-    - name: Test
+    - name: Test Project
       run: |
-        cd src/  
+        cd src/Parking-Zone.MVC  
         dotnet test --no-build --verbosity normal
