@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Text.Json;
 using Parking_Zone.Domain.Entities;
 using Parking_Zone.Service.Services;
 using Parking_Zone.Data.IRepositories;
@@ -17,7 +18,20 @@ public class ParkingZoneServiceTests
     {
         _parkingRepository = new Mock<IParkingZoneRepository>();
         _parkingZoneService = new ParkingZoneService(_parkingRepository.Object);
-        _parkinZoneTest = new ParkingZone() {Address = new Address()};
+        _parkinZoneTest = new()
+        {
+            Id = Id,
+            Name = "Parking Zone",
+            Address = new()
+            {
+                Id = Id,
+                Street = "Wall Street",
+                City = "New York",
+                Province = "New York",
+                PostalCode = "10005",
+                Country = "United States"
+            }
+        };
     }
 
     #region Insert
@@ -25,7 +39,7 @@ public class ParkingZoneServiceTests
     public void GivenParkingZoneModel_WhenInsertIsCalled_ThenRepositoryCreateIsCalled()
     {
         //Arrange 
-        _parkingRepository.Setup(x => x.Create(_parkinZoneTest)).Returns(_parkinZoneTest);
+        _parkingRepository.Setup(x => x.Create(_parkinZoneTest));
 
         //Act
         _parkingZoneService.Insert(_parkinZoneTest);
@@ -35,33 +49,33 @@ public class ParkingZoneServiceTests
     }
     #endregion
 
-    #region Modify
+    #region Update
     [Fact]
-    public void GivenParkingZoneModel_WhenModifyIsCalled_ThenRepositoryUpdateIsCalled()
+    public void GivenParkingZoneModel_WhenUpdateIsCalled_ThenRepositoryUpdateIsCalled()
     {
         //Arrange
-        _parkingRepository.Setup(x=> x.Update(_parkinZoneTest)).Returns(_parkinZoneTest);
+        _parkingRepository.Setup(x => x.Update(_parkinZoneTest));
 
         //Act
-        _parkingZoneService.Modify(_parkinZoneTest);
+        _parkingZoneService.Update(_parkinZoneTest);
 
         //Assert
-        _parkingRepository.Verify(x=> x.Update(_parkinZoneTest),Times.Once());
+        _parkingRepository.Verify(x => x.Update(_parkinZoneTest), Times.Once());
     }
     #endregion
 
     #region Remove
     [Fact]
-    public void GivenIdOfParkingZone_WhenRemoveIsCalled_ThenRepositoryDeleteIsCalled()
+    public void GivenId_WhenRemoveIsCalled_ThenRepositoryDeleteIsCalled()
     {
         //Arrange
-        _parkingRepository.Setup(x => x.Delete(Id)).Returns(true);
+        _parkingRepository.Setup(x => x.Delete(Id));
 
         //Act 
         _parkingZoneService.Remove(Id);
 
         //Assert
-        _parkingRepository.Verify(x=> x.Delete(Id), Times.Once());
+        _parkingRepository.Verify(x => x.Delete(Id), Times.Once());
     }
     #endregion
 
@@ -70,24 +84,30 @@ public class ParkingZoneServiceTests
     public void GivenNothing_WhenRetrieveAllIsCalled_ThenReturnsListOfParkingZones()
     {
         //Arrange
-        IEnumerable<ParkingZone> parkingZones = new List<ParkingZone>();
-        _parkingRepository.Setup(x=> x.GetAll()).Returns(parkingZones);
+        IEnumerable<ParkingZone> expectedParkingZones = new List<ParkingZone>() { _parkinZoneTest };
+
+        _parkingRepository
+            .Setup(x => x.GetAll())
+            .Returns(expectedParkingZones);
 
         //Act
         var result = _parkingZoneService.RetrieveAll();
 
         //Assert
         Assert.IsAssignableFrom<IEnumerable<ParkingZone>>(result);
-        _parkingRepository.Verify(x=> x.GetAll(), Times.Once());
+        Assert.Equal(JsonSerializer.Serialize(expectedParkingZones), JsonSerializer.Serialize(result));
+        _parkingRepository.Verify(x => x.GetAll(), Times.Once());
     }
     #endregion
 
     #region RetrieveById
     [Fact]
-    public void GivenIdOfParkingZone_WhenRetrieveByIdIsCalled_ThenReturnsParkingZoneModel()
+    public void GivenId_WhenRetrieveByIdIsCalled_ThenReturnsParkingZoneModel()
     {
         //Arrange
-        _parkingRepository.Setup(x=> x.Get(Id)).Returns(_parkinZoneTest);
+        _parkingRepository
+            .Setup(x => x.Get(Id))
+            .Returns(_parkinZoneTest);
 
         //Act
         var result = _parkingZoneService.RetrieveById(Id);
@@ -95,7 +115,8 @@ public class ParkingZoneServiceTests
         //Assert
         Assert.NotNull(result);
         Assert.IsType<ParkingZone>(result);
-        _parkingRepository.Verify(x=> x.Get(Id), Times.Once());
+        Assert.Equal(JsonSerializer.Serialize(_parkinZoneTest), JsonSerializer.Serialize(result));
+        _parkingRepository.Verify(x => x.Get(Id), Times.Once());
     }
     #endregion
 }

@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Text.Json;
 using Parking_Zone.Domain.Entities;
 using Parking_Zone.Service.Services;
 using Parking_Zone.Data.IRepositories;
@@ -8,16 +9,24 @@ namespace Parking_Zone.Test.Services;
 
 public class AddressServiceTests
 {
-    private readonly Mock<IAddressRepository> _addressRepositoryMock;
-    private readonly IAddressService _addressService;
+    private readonly Mock<IAddressRepository> _repositoryMock;
+    private readonly IAddressService _service;
     private readonly Address _addressTest;
-    private readonly long id = 1;
+    private readonly long Id = 1;
 
     public AddressServiceTests()
     {
-        _addressRepositoryMock = new Mock<IAddressRepository>();
-        _addressService = new AddressService(_addressRepositoryMock.Object);
-        _addressTest = new();
+        _repositoryMock = new Mock<IAddressRepository>();
+        _service = new AddressService(_repositoryMock.Object);
+        _addressTest = new()
+        {
+            Id = Id,
+            Street = "Wall Street",
+            City = "New York",
+            Province = "New York",
+            PostalCode = "10005",
+            Country = "United States"
+        };
     }
 
     #region Insert
@@ -25,43 +34,43 @@ public class AddressServiceTests
     public void GivenAddressModel_WhenInsertIsCalled_ThenRepositoryCreateIsCalled()
     {
         //Arrange
-        _addressRepositoryMock.Setup(x=> x.Create(_addressTest)).Returns(_addressTest);
+        _repositoryMock.Setup(x=> x.Create(_addressTest));
 
         //Act 
-        _addressService.Insert(_addressTest);
+        _service.Insert(_addressTest);
 
         //Assert
-        _addressRepositoryMock.Verify(x=> x.Create(_addressTest), Times.Once());
+        _repositoryMock.Verify(x=> x.Create(_addressTest), Times.Once());
     }
     #endregion
 
-    #region Modify
+    #region Update
     [Fact]
-    public void GivenAddressModel_WhenModifyIsCalled_ThenRepositoryUpdateIsCalled()
+    public void GivenAddressModel_WhenUpdateIsCalled_ThenRepositoryUpdateIsCalled()
     {
         //Arrange
-        _addressRepositoryMock.Setup(x => x.Update(_addressTest)).Returns(_addressTest);
+        _repositoryMock.Setup(x => x.Update(_addressTest));
 
         //Act 
-        _addressService.Modify(_addressTest);
+        _service.Update(_addressTest);
 
         //Assert
-        _addressRepositoryMock.Verify(x => x.Update(_addressTest), Times.Once());
+        _repositoryMock.Verify(x => x.Update(_addressTest), Times.Once());
     }
     #endregion
 
     #region Remove
     [Fact]
-    public void GivenIdOfAddress_WhenRemoveIsCalled_ThenRepositoryDeleteIsCalled()
+    public void GivenId_WhenRemoveIsCalled_ThenRepositoryDeleteIsCalled()
     {
         //Arrange
-        _addressRepositoryMock.Setup(x=> x.Delete(id)).Returns(true);
+        _repositoryMock.Setup(x => x.Delete(Id));
 
         //Act
-        _addressService.Remove(id);
+        _service.Remove(Id);
 
         //Assert
-        _addressRepositoryMock.Verify(x=> x.Delete(id), Times.Once());
+        _repositoryMock.Verify(x=> x.Delete(Id), Times.Once());
     }
     #endregion
 
@@ -70,31 +79,36 @@ public class AddressServiceTests
     public void GivenNothing_WhenRetrieveAllIsCalled_ThenReturnsListOfAddresses()
     {
         //Arrange
-        IEnumerable<Address> addresses = Enumerable.Empty<Address>();
-        _addressRepositoryMock.Setup(x=> x.GetAll()).Returns(addresses);
+        IEnumerable<Address> expectedAdresses = new List<Address>() { _addressTest };
+
+        _repositoryMock
+            .Setup(x=> x.GetAll())
+            .Returns(expectedAdresses);
 
         //Act
-        var result = _addressService.RetrieveAll();
+        var result = _service.RetrieveAll();
 
         //Assert
         Assert.IsAssignableFrom<IEnumerable<Address>>(result);
-        _addressRepositoryMock.Verify(x=> x.GetAll(), Times.Once());
+        Assert.Equal(JsonSerializer.Serialize(expectedAdresses),JsonSerializer.Serialize(result));
+        _repositoryMock.Verify(x=> x.GetAll(), Times.Once());
     }
     #endregion
 
     #region RetrieveById
     [Fact]
-    public void GivenIdOfAddress_WhenRetrieveByIdIsCalled_ThenReturnsAddress()
+    public void GivenId_WhenRetrieveByIdIsCalled_ThenReturnsAddress()
     {
         //Arrange
-        _addressRepositoryMock.Setup(x => x.Get(id)).Returns(_addressTest);
+        _repositoryMock.Setup(x => x.Get(Id)).Returns(_addressTest);
 
         //Act
-        var result = _addressService.RetrieveById(id);
+        var result = _service.RetrieveById(Id);
 
         //Assert
         Assert.IsType<Address>(result);
-        _addressRepositoryMock.Verify(x => x.Get(id), Times.Once());
+        Assert.Equal(JsonSerializer.Serialize(_addressTest), JsonSerializer.Serialize(result));
+        _repositoryMock.Verify(x => x.Get(Id), Times.Once());
     }
     #endregion
 }

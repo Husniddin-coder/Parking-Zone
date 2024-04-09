@@ -10,7 +10,7 @@ public interface IService<T> where T : Auditable
 
     void Insert(T entity);
 
-    void Modify(T entity);
+    void Update(T entity);
 
     void Remove(long id);
 }

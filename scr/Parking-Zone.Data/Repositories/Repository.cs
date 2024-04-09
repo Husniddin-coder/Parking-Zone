@@ -16,22 +16,20 @@ public class Repository<T> : IRepository<T> where T : Auditable
         _dbSet = _dbcontext.Set<T>();
     }
 
-    public T Create(T entity)
+    public void Create(T entity)
     {
         var entry = _dbSet.Add(entity);
 
         _dbcontext.SaveChanges();
-
-        return entry.Entity;
     }
 
-    public bool Delete(long id)
+    public void Delete(long id)
     {
         var entry = _dbSet.FirstOrDefault(x => x.Id == id);
 
         _dbSet.Remove(entry);
 
-        return _dbcontext.SaveChanges() > 0;
+       _dbcontext.SaveChanges();
     }
 
     public IEnumerable<T> GetAll()
@@ -40,12 +38,10 @@ public class Repository<T> : IRepository<T> where T : Auditable
     public T Get(long? id)
         => _dbSet.FirstOrDefault(e => e.Id == id);
 
-    public T Update(T entity)
+    public void Update(T entity)
     {
         var entry = _dbcontext.Update(entity);
 
         _dbcontext.SaveChanges();
-
-        return entry.Entity;
     }
 }
