@@ -127,6 +127,7 @@ public class ParkingZoneControllerTests
         //Assert
         Assert.NotNull(viewResult);
         Assert.IsType<ViewResult>(viewResult);
+        Assert.False(_parkingController.ModelState.IsValid);
     }
 
     [Fact]
@@ -142,6 +143,7 @@ public class ParkingZoneControllerTests
         //Assert
         var redirectResult = Assert.IsType<RedirectToActionResult>(viewResult);
         Assert.Equivalent(redirectResult.ActionName, "Index");
+        Assert.True(_parkingController.ModelState.IsValid);
         _parkingServiceMock.Verify(x => x.Insert(It.IsAny<ParkingZone>()), Times.Once());
     }
 
@@ -222,6 +224,7 @@ public class ParkingZoneControllerTests
         //Assert
         var model = Assert.IsType<ViewResult>(result).Model;
         Assert.IsAssignableFrom<EditVM>(model);
+        Assert.False(_parkingController.ModelState.IsValid);
         Assert.Equal(JsonSerializer.Serialize(expectedEditVM), JsonSerializer.Serialize(model));
         _parkingServiceMock.Verify(x => x.RetrieveById(Id), Times.Once());
     }
@@ -242,6 +245,7 @@ public class ParkingZoneControllerTests
         //Assert
         var resModel = Assert.IsType<RedirectToActionResult>(result);
         Assert.Equivalent(resModel.ActionName, "Index");
+        Assert.True(_parkingController.ModelState.IsValid);
         _parkingServiceMock.Verify(x => x.RetrieveById(Id), Times.Once());
         _parkingServiceMock.Verify(x => x.Update(_parkingZoneTest), Times.Once());
     }
