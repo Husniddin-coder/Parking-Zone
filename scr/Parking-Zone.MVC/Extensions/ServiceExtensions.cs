@@ -12,9 +12,11 @@ public static class ServiceExtensions
         //repositories
         services.AddScoped<IParkingZoneRepository, ParkingZoneRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
+        services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
 
         //services
         services.AddScoped<IParkingZoneService,ParkingZoneService>();
         services.AddScoped<IAddressService, AddressService>();
+        services.AddScoped<IParkingSlotService, ParkingSlotService>();
     }
 }

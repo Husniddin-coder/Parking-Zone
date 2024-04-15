@@ -1,0 +1,76 @@
+﻿
+@model SlotCreateVM
+
+@{
+    ViewData["Title"] = "Create Slot";
+}
+<h1>@Model.ParkingZoneName</h1>
+
+<h2>Create Slot</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="ParkingSlots" method="post">
+            <div class="form-group">
+                <label asp-for="Number"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsBooked"></label>
+                <select asp-for="IsBooked" class="form-control">
+                    <option value="false">Not Booked</option>
+                    <option value="true">Booked</option>
+                </select>
+                <span asp-validation-for="IsBooked" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <select asp-for="Category" class="form-control" id="categorySelect">
+                    <option value="">-- Select Category --</option>
+                    @foreach (var category in Enum.GetValues(typeof(SlotCategory)))
+                    {
+                        <option value="@((byte)category)">@category</option>
+                    }
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FeePerHour"></label>
+                <input asp-for="FeePerHour" class="form-control" id="feePerHour" />
+                <span asp-validation-for="FeePerHour" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary">
+            </div>
+
+            <input type="hidden" asp-for="ParkingZoneId" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="ParkingSlots" asp-action="Index" asp-route-id=@Model.ParkingZoneId class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#categorySelect').change(function () {
+                var selectedCategory = $(this).val();
+                if (selectedCategory === '0') 
+                { 
+                    $('#feePerHour').prop('disabled', true).val('0');
+                } 
+                else 
+                {
+                    $('#feePerHour').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}

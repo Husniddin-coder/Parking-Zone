@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Parking_Zone.Data;
+using Parking_Zone.Data.DbContexts;
 
 #nullable disable
 
@@ -18,7 +18,9 @@ namespace Parking_Zone.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.3")
-
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -225,7 +227,7 @@ namespace Parking_Zone.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Parking_Zone.MVC.Models.Address", b =>
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.Address", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +266,43 @@ namespace Parking_Zone.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Parking_Zone.MVC.Models.ParkingZone", b =>
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.ParkingSlot", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<byte>("Category")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("FeePerHour")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsBooked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ParkingZoneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParkingZoneId");
+
+                    b.ToTable("ParkingSlots");
+                });
+
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.ParkingZone", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -343,15 +381,31 @@ namespace Parking_Zone.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Parking_Zone.MVC.Models.ParkingZone", b =>
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.ParkingSlot", b =>
                 {
-                    b.HasOne("Parking_Zone.MVC.Models.Address", "Address")
+                    b.HasOne("Parking_Zone.Domain.Entities.ParkingZone", "ParkingZone")
+                        .WithMany("ParkingSlots")
+                        .HasForeignKey("ParkingZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParkingZone");
+                });
+
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.ParkingZone", b =>
+                {
+                    b.HasOne("Parking_Zone.Domain.Entities.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Parking_Zone.Domain.Entities.ParkingZone", b =>
+                {
+                    b.Navigation("ParkingSlots");
                 });
 #pragma warning restore 612, 618
         }

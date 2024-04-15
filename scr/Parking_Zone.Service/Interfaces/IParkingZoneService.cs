@@ -3,5 +3,5 @@
 namespace Parking_Zone.Service.Interfaces;
 
 public interface IParkingZoneService : IService<ParkingZone>
-{ 
+{
 }

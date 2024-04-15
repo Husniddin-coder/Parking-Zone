@@ -33,9 +33,6 @@
             <th>
                 CreatedAt
             </th>
-            <th>
-                UpdatedAt
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -64,13 +61,11 @@
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
                 <div class="button-container">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-edit">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-details">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete">Delete</a>
+                    <a asp-controller="ParkingSlots" asp-action="Index" asp-route-id="@item.Id" class="btn btn-success">Slots</a>
+                    <a asp-controller="ParkingZones" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-edit">Edit</a>
+                    <a asp-controller="ParkingZones" asp-action="Details" asp-route-id="@item.Id" class="btn btn-details">Details</a>
+                    <a asp-controller="ParkingZones" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete">Delete</a>
                 </div>
             </td>
         </tr>
