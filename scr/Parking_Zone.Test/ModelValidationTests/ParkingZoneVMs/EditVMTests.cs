@@ -5,29 +5,30 @@ namespace Parking_Zone.Test.ModelValidationTests.ParkingZoneVMs;
 
 public class EditVMTests
 {
-    public static IEnumerable<object[]> editVMTestData =>
+    public static IEnumerable<object[]> TestData =>
        new List<object[]>
        {
-            new object[] { null, "Parking Zone", "Wall Street", "New York", "New York", "10005", "United States" },
-            new object[] { 1, null, "Wall Street", "New York", "New York", "10005", "United States" },
-            new object[] { 1,"Zone",  null, "New York", "New York", "10005", "United States" },
-            new object[] { 1,"Zone", "Wall Street", null, "New York", "10005", "United States" },
-            new object[] { 1,"Zone", "Wall Street", "New York", null, "10005", "United States"  },
-            new object[] { 1,"Zone", "Wall Street", "New York", "New York", null, "United States"  },
-            new object[] { 1,"Zone", "Wall Street", "New York", "New York", "10005", null},
+            new object[] { 1,"Zone", "Wall Street", "New York", "New York", "10005", null, false},
+            new object[] { 1,"Zone",  null, "New York", "New York", "10005", "United States", false },
+            new object[] { 1,"Zone", "Wall Street", null, "New York", "10005", "United States", false },
+            new object[] { 1,"Zone", "Wall Street", "New York", null, "10005", "United States", false  },
+            new object[] { 1,"Zone", "Wall Street", "New York", "New York", null, "United States", false },
+            new object[] { 1, null, "Wall Street", "New York", "New York", "10005", "United States", false },
+            new object[] { 1, "Zone", "Wall Street", "New York", "New York", "10005", "United States", true }
        };
 
     [Theory]
-    [MemberData(nameof(editVMTestData))]
+    [MemberData(nameof(TestData))]
     public void GivenInvalidEditVM_WhenAnyPropertyIsNull_ThenCannotPassFromValidation
         (
-            Int32? id,
+            long id,
             string zoneName,
             string street,
             string city,
+            string country,
             string province,
             string postalCode,
-            string country
+            bool expectedValidation
         )
     {
         //Arrange
@@ -35,23 +36,22 @@ public class EditVMTests
         EditVM editVM = new()
         {
             Id = id,
+            City = city,
             Name = zoneName,
             Street = street,
-            City = city,
+            Country = country,
             Province = province,
             PostalCode = postalCode,
-            Country = country
         };
 
         var validationContext = new ValidationContext(editVM, null, null);
         var validationResults = new List<ValidationResult>();
 
         //Act
-        var isValidResults = Validator.TryValidateObject(editVM, validationContext, validationResults);
+        var result = Validator.TryValidateObject(editVM, validationContext, validationResults);
 
         //Assert
-        Assert.NotEmpty(validationResults);
-        Assert.False(isValidResults);
+        Assert.Equal(result, expectedValidation);
     }
 
 }

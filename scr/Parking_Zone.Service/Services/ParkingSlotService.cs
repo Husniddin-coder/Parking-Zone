@@ -30,7 +30,7 @@ public class ParkingSlotService : Service<ParkingSlot>, IParkingSlotService
     public bool SlotIsFoundWithThisNumber(int slotNumber,  long zoneId)
         => _slotRepository
         .GetAll()
-        .Where(x=> x.ParkingZoneId == zoneId &&  x.Number == slotNumber)
+        .Where(x=> x.ParkingZoneId == zoneId && x.Number == slotNumber)
         .Any();
 
 }

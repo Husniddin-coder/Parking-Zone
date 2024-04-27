@@ -6,7 +6,7 @@ namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 public class DetailsVM
 {
     [Required]
-    public long? Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -27,7 +27,7 @@ public class DetailsVM
     public string PostalCode { get; set; }
 
     [Required]
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

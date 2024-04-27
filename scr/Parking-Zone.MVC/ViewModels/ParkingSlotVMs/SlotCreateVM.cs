@@ -1,20 +1,27 @@
 ﻿using Parking_Zone.Domain.Entities;
 using Parking_Zone.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
 
 public class SlotCreateVM
 {
+    [Required]
     public int Number { get; set; }
 
+    [Required]
     public bool IsBooked { get; set; } = false;
 
+    [Required]
     public decimal FeePerHour { get; set; }
 
-    public SlotCategory Category { get; set; } = SlotCategory.Standart;
+    [Required]
+    public SlotCategory Category { get; set; }
 
+    [Required]
     public long ParkingZoneId { get; set; }
 
+    [Required]
     public string ParkingZoneName { get; set; }
 
     public ParkingSlot MapToModel(ParkingZone existingZone)

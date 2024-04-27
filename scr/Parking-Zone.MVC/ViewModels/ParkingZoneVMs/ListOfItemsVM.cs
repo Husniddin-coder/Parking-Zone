@@ -7,7 +7,7 @@ namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 public class ListOfItemsVM
 {
     [Required]
-    public long? Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -28,7 +28,7 @@ public class ListOfItemsVM
     public string PostalCode { get; set; }
 
     [Required]
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

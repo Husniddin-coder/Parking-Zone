@@ -5,48 +5,49 @@ namespace Parking_Zone.Test.ModelValidationTests.ParkingZoneVMs;
 
 public class CreateVMTests
 {
-    public static IEnumerable<object[]> testCreateVMData =>
+    public static IEnumerable<object[]> TestData =>
         new List<object[]>
         {
-            new object[] { null, "Wall Street", "New York", "New York", "10005", "United States" },
-            new object[] { "Zone", null, "New York", "New York", "10005", "United States" },
-            new object[] { "Zone", "Wall Street", null, "New York", "10005", "United States" },
-            new object[] { "Zone", "Wall Street", "New York", null, "10005", "United States" },
-            new object[] { "Zone", "Wall Street", "New York", "New York", null, "United States" },
-            new object[] { "Zone", "Wall Street", "New York", "New York", "10005", null },
+            new object[] { "Zone", "Wall Street", "New York", "New York", "10005", null , false },
+            new object[] { "Zone", null, "New York", "New York", "10005", "United States", false },
+            new object[] { "Zone", "Wall Street", null, "New York", "10005", "United States", false },
+            new object[] { "Zone", "Wall Street", "New York", null, "10005", "United States" , false },
+            new object[] { "Zone", "Wall Street", "New York", "New York", null, "United States", false },
+            new object[] { null, "Wall Street", "New York", "New York", "10005", "United States", false },
+            new object[] { "Zone", "Wall Street", "New York", "New York", "10005", "Unitet States" , true},
         };
 
     [Theory]
-    [MemberData(nameof(testCreateVMData))]
-    public void GivenInvalidCreateVM_WhenAnyPropertyIsNull_ThenCannotPassFromValidation
+    [MemberData(nameof(TestData))]
+    public void GivenItemToBeValidated_WhenCreatingCreateVM_ThenValidationIsPerformed
      (
-        string zoneName, 
-        string street, 
-        string city, 
-        string province, 
-        string postalCode, 
-        string country 
+        string zoneName,
+        string street,
+        string city,
+        string country,
+        string postalCode,
+        string province,
+        bool expectedValidation
      )
     {
         //Arrange
         CreateVM createVM = new()
         {
-            Name = zoneName,
-            Street = street,
             City = city,
+            Street = street,
+            Name = zoneName,
+            Country = country,
             Province = province,
-            PostalCode = postalCode,
-            Country = country
+            PostalCode = postalCode
         };
 
         var validationContext = new ValidationContext(createVM, null, null);
         var validationResults = new List<ValidationResult>();
 
         //Act 
-        var isValidResult = Validator.TryValidateObject(createVM, validationContext, validationResults);
+        var result = Validator.TryValidateObject(createVM, validationContext, validationResults);
 
         //Assert
-        Assert.NotEmpty(validationResults);
-        Assert.False(isValidResult);
+        Assert.Equal(result, expectedValidation);
     }
 }
