@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
+﻿using Microsoft.AspNetCore.Mvc;
 using Parking_Zone.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
 
 namespace Parking_Zone.MVC.Areas.Admin.Controllers;
 
