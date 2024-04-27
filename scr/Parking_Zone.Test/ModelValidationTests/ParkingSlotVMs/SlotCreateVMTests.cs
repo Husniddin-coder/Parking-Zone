@@ -9,8 +9,8 @@ public class SlotCreateVMTests
     public static IEnumerable<object[]> TestData =>
         new List<object[]>
         {
-            new object[] { 5, true, 40.54M, SlotCategory.Standart, 1, null, false },
-            new object[] { 5, true, 40.54M, SlotCategory.Standart, 1, "Zone", true },
+            new object[] { 5,1, true, 40.54M, SlotCategory.Standart, null, false },
+            new object[] { 5,1, true, 40.54M, SlotCategory.Standart, "Zone", true },
         };
 
     [Theory]
@@ -20,9 +20,9 @@ public class SlotCreateVMTests
         int number,
         long zoneId,
         bool isBooked,
-        string zoneName,
         decimal feePerHour,
         SlotCategory category,
+        string zoneName,
         bool expectedValidation
      )
     {
