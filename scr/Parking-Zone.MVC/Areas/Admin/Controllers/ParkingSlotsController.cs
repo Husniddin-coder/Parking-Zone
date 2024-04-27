@@ -38,6 +38,10 @@ public class ParkingSlotsController : Controller
     public IActionResult Details(long id)
     {
         var slot = _slotService.RetrieveById(id);
+
+        if (slot is null)
+            return NotFound("Slot not found");
+
         var slotDetailsVM = new SlotDetailsVM(slot);
         return View(slotDetailsVM);
     }
@@ -45,6 +49,10 @@ public class ParkingSlotsController : Controller
     public IActionResult Create(long id)
     {
         var zone = _zoneService.RetrieveById(id);
+
+        if (zone is null)
+            return NotFound("Zone not found");
+        
         var slotCreateVM = new SlotCreateVM();
         slotCreateVM.ParkingZoneId = id;
         slotCreateVM.ParkingZoneName = zone.Name;
@@ -76,6 +84,10 @@ public class ParkingSlotsController : Controller
     public IActionResult Edit(long id)
     {
         var slot = _slotService.RetrieveById(id);
+
+        if (slot is null)
+            return NotFound("Slot not found");
+
         var slotEditVM = new SlotEditVM(slot);
         return View(slotEditVM);
     }

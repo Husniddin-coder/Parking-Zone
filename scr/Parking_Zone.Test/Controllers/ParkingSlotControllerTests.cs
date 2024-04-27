@@ -107,6 +107,22 @@ public class ParkingSlotControllerTests
 
         _slotService.Verify(x => x.RetrieveById(Id), Times.Once());
     }
+
+    [Fact]
+    public void GivenInvalidSlotId_WhenDetailsIsCalled_ThenReturnsNotFoundResult()
+    {
+        //Arrange
+        _slotService
+            .Setup(x => x.RetrieveById(Id));
+
+        //Act
+        var result = _slotsController.Details(Id);
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsType<NotFoundObjectResult>(result);
+        _slotService.Verify(x => x.RetrieveById(Id), Times.Once());
+    }
     #endregion
 
     #region Create
@@ -133,6 +149,22 @@ public class ParkingSlotControllerTests
         Assert.IsAssignableFrom<SlotCreateVM>(model);
         Assert.Equal(JsonSerializer.Serialize(expectedSlotCreateVM), JsonSerializer.Serialize(model));
 
+        _zoneService.Verify(x => x.RetrieveById(Id), Times.Once());
+    }
+
+    [Fact]
+    public void GivenInvalidZoneId_WhenGetCreateIsCalled_ThenReturnsNotFoundResult()
+    {
+        //Arrange
+        _zoneService
+            .Setup(x => x.RetrieveById(Id));
+
+        //Act
+        var result = _slotsController.Create(Id);
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsType<NotFoundObjectResult>(result);
         _zoneService.Verify(x => x.RetrieveById(Id), Times.Once());
     }
 
@@ -250,6 +282,22 @@ public class ParkingSlotControllerTests
         var model = Assert.IsType<ViewResult>(result).Model;
         Assert.IsAssignableFrom<SlotEditVM>(model);
         Assert.Equal(JsonSerializer.Serialize(expectedEditVM), JsonSerializer.Serialize(model));
+        _slotService.Verify(x => x.RetrieveById(Id), Times.Once());
+    }
+
+    [Fact]
+    public void GivenInvalidSlotId_WhenGetEditIsCalled_ThenReturnsNotFoundResult()
+    {
+        //Arrange
+        _slotService
+            .Setup(x => x.RetrieveById(Id));
+
+        //Act
+        var result = _slotsController.Edit(Id);
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsType<NotFoundObjectResult>(result);
         _slotService.Verify(x => x.RetrieveById(Id), Times.Once());
     }
 
