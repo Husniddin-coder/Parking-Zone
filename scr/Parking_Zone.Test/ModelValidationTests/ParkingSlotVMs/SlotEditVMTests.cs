@@ -20,7 +20,7 @@ public class SlotEditVMTests
         long id,
         int number,
         long zoneId,
-        bool isBooked,
+        bool IsAvailable,
         decimal feePerHour,
         DateTime createdAt,
         SlotCategory category,
@@ -33,7 +33,7 @@ public class SlotEditVMTests
         {
             Id = id,
             Number = number,
-            IsAvailable = isBooked,
+            IsAvailable = IsAvailable,
             Category = category,
             CreatedAt = createdAt,
             ParkingZoneId = zoneId,

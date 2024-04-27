@@ -22,24 +22,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="IsAvailable"></label>
-                <select asp-for="IsAvailable" class="form-control">
-                    <option value="false">False</option>
-                    <option value="true">True</option>
-                </select>
-                <span asp-validation-for="IsAvailable" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Category"></label>
-                <select asp-for="Category" class="form-control" id="categorySelect">
-                    <option value="">-- Select Category --</option>
-                    @foreach (var category in Enum.GetValues(typeof(SlotCategory)))
-                    {
-                        <option value="@((byte)category)">@category</option>
-                    }
-                </select>
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" id="Category" class="form-select" asp-items="Html.GetEnumSelectList<SlotCategory>()"></select>
             </div>
 
             <div class="form-group">
@@ -47,6 +31,13 @@
                 <input asp-for="FeePerHour" class="form-control" id="feePerHour" />
                 <span asp-validation-for="FeePerHour" class="text-danger"></span>
             </div>
+
+            <div>
+                <label>
+                    <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
+                </label>
+            </div>
+            <br />
 
             <input type="hidden" asp-for="ParkingZoneId" />
             <input type="hidden" asp-for="ParkingZoneName" />
@@ -65,7 +56,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#categorySelect').change(function () {
+            $('#Category').change(function () {
                 var selectedCategory = $(this).val();
                 if (selectedCategory === '0') 
                 { 

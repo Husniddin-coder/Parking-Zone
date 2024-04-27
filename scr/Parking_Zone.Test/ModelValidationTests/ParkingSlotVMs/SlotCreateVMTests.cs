@@ -19,7 +19,7 @@ public class SlotCreateVMTests
      (
         int number,
         long zoneId,
-        bool isBooked,
+        bool IsAvailable,
         decimal feePerHour,
         SlotCategory category,
         string zoneName,
@@ -30,7 +30,7 @@ public class SlotCreateVMTests
         SlotCreateVM slotCreateVM = new()
         {
             Number = number,
-            IsAvailable = isBooked,
+            IsAvailable = IsAvailable,
             Category = category,
             ParkingZoneId = zoneId,
             FeePerHour = feePerHour,

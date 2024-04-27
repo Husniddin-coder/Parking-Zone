@@ -32,7 +32,6 @@ public class EditVMTests
         )
     {
         //Arrange
-
         EditVM editVM = new()
         {
             Id = id,
@@ -53,5 +52,4 @@ public class EditVMTests
         //Assert
         Assert.Equal(result, expectedValidation);
     }
-
 }
