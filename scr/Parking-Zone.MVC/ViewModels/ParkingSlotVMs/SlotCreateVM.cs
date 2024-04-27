@@ -10,7 +10,7 @@ public class SlotCreateVM
     public int Number { get; set; }
 
     [Required]
-    public bool IsBooked { get; set; } = false;
+    public bool IsAvailable { get; set; } = false;
 
     [Required]
     public decimal FeePerHour { get; set; }
@@ -29,7 +29,7 @@ public class SlotCreateVM
         return new()
         {
             Number = Number,
-            IsBooked = IsBooked,
+            IsAvailable = IsAvailable,
             FeePerHour = FeePerHour,
             Category = Category,
             ParkingZoneId = ParkingZoneId,

@@ -32,7 +32,7 @@ public class ListOfSlotVMsTest
             Id = id,
             Number = number,
             Category = category,
-            IsBooked = isBooked,
+            IsAvailable = isBooked,
             CreatedAt = createdAt,
             ParkingZoneId = zoneId,
             FeePerHour = feePerHour,

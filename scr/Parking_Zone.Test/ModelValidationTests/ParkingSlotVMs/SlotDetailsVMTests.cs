@@ -33,7 +33,7 @@ public class SlotDetailsVMTests
         {
             Id = id,
             Number = number,
-            IsBooked = isBooked,
+            IsAvailable = isBooked,
             Category = category,
             CreatedAt = createdAt,
             ParkingZoneId = zoneId,

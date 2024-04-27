@@ -6,7 +6,7 @@ public class ParkingSlot : Auditable
 {
     public int Number { get; set; }
 
-    public bool IsBooked { get; set; }
+    public bool IsAvailable { get; set; }
 
     public decimal FeePerHour { get; set; }
 

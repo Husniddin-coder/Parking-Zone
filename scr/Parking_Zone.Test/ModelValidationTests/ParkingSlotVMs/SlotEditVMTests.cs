@@ -33,7 +33,7 @@ public class SlotEditVMTests
         {
             Id = id,
             Number = number,
-            IsBooked = isBooked,
+            IsAvailable = isBooked,
             Category = category,
             CreatedAt = createdAt,
             ParkingZoneId = zoneId,

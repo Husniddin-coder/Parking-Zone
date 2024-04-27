@@ -22,12 +22,12 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="IsBooked"></label>
-                <select asp-for="IsBooked" class="form-control">
-                    <option value="false">Not Booked</option>
-                    <option value="true">Booked</option>
+                <label asp-for="IsAvailable"></label>
+                <select asp-for="IsAvailable" class="form-control">
+                    <option value="false">False</option>
+                    <option value="true">True</option>
                 </select>
-                <span asp-validation-for="IsBooked" class="text-danger"></span>
+                <span asp-validation-for="IsAvailable" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -49,6 +49,7 @@
             </div>
 
             <input type="hidden" asp-for="ParkingZoneId" />
+            <input type="hidden" asp-for="ParkingZoneName" />
             <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />
             </div>

@@ -30,7 +30,7 @@ public class SlotCreateVMTests
         SlotCreateVM slotCreateVM = new()
         {
             Number = number,
-            IsBooked = isBooked,
+            IsAvailable = isBooked,
             Category = category,
             ParkingZoneId = zoneId,
             FeePerHour = feePerHour,

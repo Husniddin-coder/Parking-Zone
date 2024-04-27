@@ -13,7 +13,7 @@ public class ListOfSlotVMs
     public int Number { get; set; }
 
     [Required]
-    public bool IsBooked { get; set; }
+    public bool IsAvailable { get; set; }
 
     [Required]
     public decimal FeePerHour { get; set; }
@@ -35,7 +35,7 @@ public class ListOfSlotVMs
     {
         Id = parkingSlot.Id;
         Number = parkingSlot.Number;
-        IsBooked = parkingSlot.IsBooked;
+        IsAvailable = parkingSlot.IsAvailable;
         FeePerHour = parkingSlot.FeePerHour;
         Category = parkingSlot.Category;
         ParkingZoneId = parkingSlot.ParkingZoneId;

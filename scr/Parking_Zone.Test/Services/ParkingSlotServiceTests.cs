@@ -23,7 +23,7 @@ public class ParkingSlotServiceTests
         {
             Id = Id,
             Number = 5,
-            IsBooked = true,
+            IsAvailable = true,
             Category = SlotCategory.Premium,
             FeePerHour = 10,
             ParkingZoneId = Id

@@ -13,7 +13,7 @@ public class SlotEditVM
     public int Number { get; set; }
 
     [Required]
-    public bool IsBooked { get; set; } = false;
+    public bool IsAvailable { get; set; } = false;
 
     [Required]
     public decimal FeePerHour { get; set; }
@@ -34,7 +34,7 @@ public class SlotEditVM
     {
         Id = parkingSlot.Id;
         Number = parkingSlot.Number;
-        IsBooked = parkingSlot.IsBooked;
+        IsAvailable = parkingSlot.IsAvailable;
         Category = parkingSlot.Category;
         FeePerHour = parkingSlot.FeePerHour;
         ParkingZoneId = parkingSlot.ParkingZoneId;
@@ -44,7 +44,7 @@ public class SlotEditVM
     public ParkingSlot MapToModel(ParkingSlot existingSlot)
     {
         existingSlot.Number = Number;
-        existingSlot.IsBooked = IsBooked;
+        existingSlot.IsAvailable = IsAvailable;
         existingSlot.FeePerHour = FeePerHour;
         existingSlot.Category = Category;
         existingSlot.ParkingZoneId = ParkingZoneId;

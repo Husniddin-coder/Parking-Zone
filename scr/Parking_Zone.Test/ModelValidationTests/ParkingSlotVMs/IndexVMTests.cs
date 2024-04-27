@@ -15,7 +15,7 @@ public class IndexVMTests
                 {
                     Id = 1,
                     Number = 5,
-                    IsBooked = true,
+                    IsAvailable = true,
                     Category = SlotCategory.Premium,
                     FeePerHour = 10,
                     ParkingZoneId = 1,
@@ -41,7 +41,7 @@ public class IndexVMTests
                 {
                     Id = 1,
                     Number = 5,
-                    IsBooked = true,
+                    IsAvailable = true,
                     Category = SlotCategory.Premium,
                     FeePerHour = 10,
                     ParkingZoneId = 1,

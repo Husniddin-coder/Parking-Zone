@@ -41,7 +41,7 @@ public class ParkingSlotControllerTests
         {
             Id = Id,
             Number = 5,
-            IsBooked = true,
+            IsAvailable = true,
             Category = SlotCategory.Premium,
             FeePerHour = 10,
             ParkingZoneId = Id,
@@ -143,7 +143,7 @@ public class ParkingSlotControllerTests
         SlotCreateVM slotCreateVM = new()
         {
             Number = -1, // negative number
-            IsBooked = true,
+            IsAvailable = true,
             FeePerHour = 10,
             Category = SlotCategory.Standart,
             ParkingZoneName = _zoneTest.Name,
@@ -170,7 +170,7 @@ public class ParkingSlotControllerTests
         SlotCreateVM slotCreateVM = new()
         {
             Number = 1,
-            IsBooked = true,
+            IsAvailable = true,
             FeePerHour = 10,
             Category = SlotCategory.Standart,
             ParkingZoneName = _zoneTest.Name,
@@ -200,7 +200,7 @@ public class ParkingSlotControllerTests
         SlotCreateVM slotCreateVM = new()
         {
             Number = 1,
-            IsBooked = true,
+            IsAvailable = true,
             FeePerHour = 10,
             Category = SlotCategory.Standart,
             ParkingZoneName = _zoneTest.Name,
