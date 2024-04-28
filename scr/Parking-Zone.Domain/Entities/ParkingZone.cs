@@ -10,5 +10,7 @@ namespace Parking_Zone.Domain.Entities
         public long AddressId { get; set; }
 
         public virtual Address Address { get; set; }
+
+        public virtual ICollection<ParkingSlot> ParkingSlots { get; set; }
     }
 }

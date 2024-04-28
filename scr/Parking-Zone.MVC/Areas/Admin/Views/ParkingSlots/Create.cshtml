@@ -1,0 +1,66 @@
+﻿
+@model SlotCreateVM
+
+@{
+    ViewData["Title"] = "Create Slot";
+}
+<h1>@Model.ParkingZoneName</h1>
+
+<h2>Create Slot</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="ParkingSlots" method="post">
+            <div class="form-group">
+                <label asp-for="Number"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" id="Category" class="form-select" asp-items="Html.GetEnumSelectList<SlotCategory>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FeePerHour"></label>
+                <input asp-for="FeePerHour" class="form-control" id="feePerHour" />
+                <span asp-validation-for="FeePerHour" class="text-danger"></span>
+            </div>
+            <div>
+                <label>
+                    <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
+                </label>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary">
+            </div>
+
+            <input type="hidden" asp-for="ParkingZoneId" />
+            <input type="hidden" asp-for="ParkingZoneName" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="ParkingSlots" asp-action="Index" asp-route-id=@Model.ParkingZoneId class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#Category').change(function () {
+                var selectedCategory = $(this).val();
+                if (selectedCategory === '0') 
+                { 
+                    $('#feePerHour').prop('disabled', true).val('0');
+                } 
+                else 
+                {
+                    $('#feePerHour').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}

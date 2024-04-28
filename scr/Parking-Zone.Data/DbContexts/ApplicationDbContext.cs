@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Parking_Zone.Domain.Entities;
 
-namespace Parking_Zone.Data
+namespace Parking_Zone.Data.DbContexts
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -12,5 +12,7 @@ namespace Parking_Zone.Data
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<ParkingZone> ParkingZones { get; set; }
+        public DbSet<ParkingSlot> ParkingSlots { get; set; }
+
     }
 }

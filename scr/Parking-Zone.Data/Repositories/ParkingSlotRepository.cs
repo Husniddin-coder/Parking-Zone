@@ -4,8 +4,8 @@ using Parking_Zone.Domain.Entities;
 
 namespace Parking_Zone.Data.Repositories;
 
-public class AddressRepository : Repository<Address> , IAddressRepository
+public class ParkingSlotRepository : Repository<ParkingSlot> , IParkingSlotRepository
 {
-    public AddressRepository(ApplicationDbContext context) : base(context)
+    public ParkingSlotRepository(ApplicationDbContext context) : base(context)
     { }
 }

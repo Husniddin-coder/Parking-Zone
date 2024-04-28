@@ -1,0 +1,65 @@
+﻿@model IndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@Model.ZoneName</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id=@Model.ZoneId class="btn btn-primary">Create New Slot</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotsVMs.FirstOrDefault().Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotsVMs.FirstOrDefault().FeePerHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotsVMs.FirstOrDefault().Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotsVMs.FirstOrDefault().IsAvailable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotsVMs.FirstOrDefault().CreatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SlotsVMs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeePerHour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @item.IsAvailable.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <div class="button-container">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-edit">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-details">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="ParkingZones" asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

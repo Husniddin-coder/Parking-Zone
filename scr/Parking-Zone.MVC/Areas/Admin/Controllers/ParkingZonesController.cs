@@ -104,6 +104,7 @@ public class ParkingZonesController : Controller
     public IActionResult Delete(long? id)
     {
         var parkingZone = _parkingZoneService.RetrieveById(id);
+
         if (parkingZone is null)
             return NotFound();
 
@@ -125,7 +126,7 @@ public class ParkingZonesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool ParkingZoneExists(long id)
+    private bool ParkingZoneExists(long? id)
     {
         var park = _parkingZoneService.RetrieveById(id);
 
