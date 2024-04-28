@@ -6,7 +6,7 @@ namespace Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 public class EditVM
 {
     [Required]
-    public long? Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public string Name { get; set; }

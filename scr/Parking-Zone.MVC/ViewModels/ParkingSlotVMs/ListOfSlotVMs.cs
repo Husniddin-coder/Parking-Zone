@@ -7,7 +7,7 @@ namespace Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
 public class ListOfSlotVMs
 {
     [Required]
-    public long? Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public int Number { get; set; }
