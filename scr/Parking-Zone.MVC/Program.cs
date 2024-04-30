@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Parking_Zone.Data;
 using Parking_Zone.Data.DbContexts;
+using Parking_Zone.Data.Models;
 using Parking_Zone.MVC.Extensions;
 
 namespace Parking_Zone.MVC;
@@ -21,7 +20,7 @@ public class Program
         });
         builder.Services.AddCustomServices();
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+        builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                         .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
 

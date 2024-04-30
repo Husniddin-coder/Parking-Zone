@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Parking_Zone.Data.Models
 @using Parking_Zone.MVC.ViewModels;
 @using Parking_Zone.MVC.ViewModels.ParkingZoneVMs;
 @using Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
 @using Parking_Zone.Domain.Enums;
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<AppUser> SignInManager
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

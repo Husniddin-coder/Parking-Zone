@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Parking_Zone.Data.Models;
 
 namespace Parking_Zone.MVC.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -55,12 +56,17 @@ namespace Parking_Zone.MVC.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full name")]
+            public string Name { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(AppUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -69,6 +75,7 @@ namespace Parking_Zone.MVC.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Name = user.Name,
                 PhoneNumber = phoneNumber
             };
         }
@@ -110,6 +117,10 @@ namespace Parking_Zone.MVC.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if(Input.Name != user.Name)
+                user.Name = Input.Name;
+
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
