@@ -68,15 +68,6 @@ namespace Parking_Zone.MVC.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name="Full name")]
-            public string Name { get; set; }
-
-            [Required]
-            [Phone]
-            [Display(Name="Phone number")]
-            public string PhoneNumber { get; set; }
 
             [Required]
             [EmailAddress]
@@ -116,10 +107,8 @@ namespace Parking_Zone.MVC.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
-                user.Name = Input.Name;
-                user.PhoneNumber = Input.PhoneNumber;
-
+                user.Name = Input.Email;
+                
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
