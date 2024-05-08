@@ -6,11 +6,11 @@ public class Reservation : Auditable
 
     public int Duration { get; set; }
 
-    public string VehiclePlateNumber { get; set; }
+    public string VehicleNumber { get; set; }
 
     public long ParkingSlotId { get; set; }
 
     public virtual ParkingSlot ParkingSlot { get; set; }
 
-    public long UserId { get; set; }
+    public string AppUserId { get; set; }
 }

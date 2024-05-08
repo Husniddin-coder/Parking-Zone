@@ -15,6 +15,7 @@ public class ParkingSlotService : Service<ParkingSlot>, IParkingSlotService
         _slotRepository = repository;
     }
 
+
     public override void Insert(ParkingSlot slot)
     {
         slot.UpdateAt = DateTime.Now;
@@ -33,4 +34,15 @@ public class ParkingSlotService : Service<ParkingSlot>, IParkingSlotService
         .Where(x=> x.ParkingZoneId == zoneId && x.Number == slotNumber)
         .Any();
 
+    public bool FreeSlot(ParkingSlot slot, DateTime startTime, int duration)
+        => !slot.Reservations.Any(e =>
+        startTime >= e.StartTime && startTime < e.StartTime.AddHours(duration) ||
+        startTime.AddHours(duration) > e.StartTime && startTime.AddHours(duration) <= e.StartTime.AddHours(duration) ||
+        startTime <= e.StartTime && startTime.AddHours(duration) >= e.StartTime.AddHours(duration)
+        );
+
+    public IEnumerable<ParkingSlot> GetFreeSlotsByZoneIdAndPeriod(long zoneId, DateTime startTime, int duration)
+        => _slotRepository
+        .GetAll()
+        .Where(x => x.ParkingZoneId == zoneId && FreeSlot(x, startTime, duration) && x.IsAvailable);
 }
