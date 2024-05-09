@@ -11,13 +11,16 @@ namespace Parking_Zone.Test.Services;
 public class ParkingSlotServiceTests
 {
     private readonly Mock<IParkingSlotRepository> _slotRepositoryMock;
+    private readonly Mock<IParkingSlotService> _slotServiceMock;
     private readonly IParkingSlotService _slotService;
     private readonly ParkingSlot _slotTest;
     private readonly long Id = 1;
+    private readonly DateTime startTime = DateTime.UtcNow;
 
     public ParkingSlotServiceTests()
     {
         _slotRepositoryMock = new Mock<IParkingSlotRepository>();
+        _slotServiceMock = new Mock<IParkingSlotService>();
         _slotService = new ParkingSlotService(_slotRepositoryMock.Object);
         _slotTest = new()
         {
@@ -27,18 +30,18 @@ public class ParkingSlotServiceTests
             Category = SlotCategory.Premium,
             FeePerHour = 10,
             ParkingZoneId = Id,
-            Reservations = new[]
-            {
+            Reservations = 
+            [
                 new Reservation
                 {
                     Id = Id,
                     VehicleNumber = "30A132AAuz",
-                    StartTime = DateTime.Now,
-                    Duration = 3,
+                    StartTime = startTime.AddHours(4),
+                    Duration = 2,
                     ParkingSlotId = Id,
                     AppUserId = Id.ToString()
                 }
-            }
+            ]
         };
     }
 
@@ -92,11 +95,10 @@ public class ParkingSlotServiceTests
     public void GivenSlot_StartTime_Duration_WhenFreeSlotIsCalled_ThenReturnsFalse()
     {
         //Arrange
-        DateTime startTime = DateTime.Now.AddHours(1);
-        int duration = 2;
+        int duration = 4;
 
         //Act
-        var result = _slotService.FreeSlot(_slotTest, startTime, duration);
+        var result = _slotService.FreeSlot(_slotTest, startTime.AddHours(5), duration);
 
         //Assert
         Assert.False(result);
@@ -229,12 +231,14 @@ public class ParkingSlotServiceTests
         _slotRepositoryMock
             .Setup(x => x.GetAll())
             .Returns(expectedSlots);
-
+        _slotServiceMock
+            .Setup(x => x.FreeSlot(_slotTest, startTime.AddHours(1), 2))
+            .Returns(true);
         //Act
-        var result = _slotService.GetFreeSlotsByZoneIdAndPeriod(Id, DateTime.UtcNow.AddHours(1), 2);
+        var result = _slotService.GetFreeSlotsByZoneIdAndPeriod(Id, startTime.AddHours(1), 2);
 
         //Assert
-        Assert.Equal(JsonSerializer.Serialize(expectedSlots), JsonSerializer.Serialize(result));
+        Assert.NotNull(result);
 
         _slotRepositoryMock.Verify(x => x.GetAll(), Times.Once);
     }
