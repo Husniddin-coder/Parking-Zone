@@ -7,20 +7,21 @@ namespace Parking_Zone.MVC.ViewModels.ReservationVMs;
 
 public class FreeSlotsVM
 {
+    public static DateTime date = DateTime.Now;
 
-    public SelectList Zones { get; set; }
+    [Required]
+    public DateTime StartTime { get; set; } = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0);
 
-    [Required(ErrorMessage = "Please select a start time.")]
-    public DateTime StartTime { get; set; }
-
-    [Required(ErrorMessage = "Please enter a duration.")]
+    [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Duration must be greater than 0.")]
     public int Duration { get; set; }
 
-    [Required(ErrorMessage = "Please select a zone.")]
+    [Required]
     public long ZoneId { get; set; }
 
     public string ZoneName { get; set; }
+
+    public SelectList Zones { get; set; }
 
     public IEnumerable<ListOfSlotVMs> FreeSlots { get; set; }
 

@@ -47,7 +47,6 @@ public class ParkingSlotControllerTests
             ParkingZoneId = Id,
             ParkingZone = _zoneTest
         };
-
     }
 
     #region Index
