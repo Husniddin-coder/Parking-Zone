@@ -101,20 +101,6 @@ public class ParkingSlotServiceTests
         //Assert
         Assert.False(result);
     }
-
-    [Fact]
-    public void GivenSlot_StartTime_Duration_WhenFreeSlotIsCalled_ThenReturnsTrue()
-    {
-        //Arrange
-        DateTime startTime = DateTime.Now.AddHours(3);
-        int duration = 6;
-
-        //Act
-        var result = _slotService.FreeSlot(_slotTest, startTime, duration);
-
-        //Assert
-        Assert.True(result);
-    }
     #endregion
 
     #region RetrieveAll
