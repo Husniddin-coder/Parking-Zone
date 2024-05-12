@@ -15,4 +15,6 @@ public class ParkingSlot : Auditable
     public long ParkingZoneId { get; set; }
 
     public virtual ParkingZone ParkingZone { get; set; }
+
+    public virtual ICollection<Reservation> Reservations { get; set; }
 }

@@ -1,0 +1,75 @@
+﻿@model FreeSlotsVM
+
+<h2>Select Options</h2>
+<form asp-action="FreeSlots" asp-controller="Reservation" method="post">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ZoneId" class="col-form-label">Select Zone:</label>
+                <div class="select-wrapper">
+                    <select asp-for="ZoneId" asp-items="@Model.Zones" class="form-select" class="form-control select-dropdown">
+                        <option value="" selected>Choose Zone</option> 
+                    </select>
+                    <i class="fa fa-angle-down select-icon"></i>
+                </div>
+                <span asp-validation-for="ZoneId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="StartTime" class="col-form-label">Start Time:</label>
+                <input asp-for="StartTime" type="datetime-local" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Duration" class="col-form-label">Duration (hours):</label>
+                <input asp-for="Duration" type="number" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3" style="margin-top:36px">
+            <button type="submit" class="btn btn-primary">Search</button> |
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</form>
+
+<h3>Free Slots in @Model.ZoneName</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Slot Number</th>
+            <th>Is Available</th>
+            <th>Fee Per Hour</th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if(Model.FreeSlots is not null && Model.FreeSlots.Count() > 0)
+            {
+                @foreach (var slot in Model.FreeSlots)
+                {
+                    <tr>
+                        <td>@slot.Number</td>
+                        <td>@slot.IsAvailable</td>
+                        <td>@slot.FeePerHour</td>
+                        <td>@slot.Category</td>
+                        <td>@slot.CreatedAt</td>
+                        <td>@slot.UpdatedAt</td>
+                        <td>
+                            <form asp-controller="Reservation" asp-action="Reserve" asp-route-id="@slot.Id" method="get">
+                                <button type="submit" class="btn btn-primary">Reserve</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
