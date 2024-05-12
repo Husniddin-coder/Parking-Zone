@@ -20,7 +20,6 @@ public class ReservationControllerTests
     private readonly ParkingSlot _slotTest;
     private readonly long Id = 1;
 
-
     public ReservationControllerTests()
     {
         _zoneService = new Mock<IParkingZoneService>();
@@ -90,12 +89,11 @@ public class ReservationControllerTests
 
         //Assert
         Assert.IsType<NotFoundObjectResult>(result);
-
         _zoneService.Verify(x => x.RetrieveAll(), Times.Once());
     }
 
     [Fact]
-    public void GivenFreeSlotsVM_WhenFreeSlotsIsCalled_ThenReturnsViewResultWithVM()
+    public void GivenFreeSlotsVM_WhenPostFreeSlotsIsCalled_ThenReturnsViewResultWithVM()
     {
         //Arrange
         var expectedSlots = new List<ParkingSlot>() { _slotTest };
@@ -155,6 +153,4 @@ public class ReservationControllerTests
         Assert.False(_controller.ModelState.IsValid);
     }
     #endregion
-
-
 }
