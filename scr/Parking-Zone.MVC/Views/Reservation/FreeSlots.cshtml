@@ -63,7 +63,7 @@
                         <td>@slot.CreatedAt</td>
                         <td>@slot.UpdatedAt</td>
                         <td>
-                            <form asp-controller="Reservation" asp-action="Reservate" asp-route-id="@slot.Id" method="get">
+                            <form asp-controller="Reservation" asp-action="Reserve" asp-route-id="@slot.Id" method="get">
                                 <button type="submit" class="btn btn-primary">Reserve</button>
                             </form>
                         </td>
