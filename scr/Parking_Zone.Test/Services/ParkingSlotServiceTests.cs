@@ -106,7 +106,7 @@ public class ParkingSlotServiceTests
     public void GivenSlot_StartTime_Duration_WhenFreeSlotIsCalled_ThenReturnsTrue()
     {
         //Arrange
-        DateTime startTime = DateTime.Now.AddHours(4);
+        DateTime startTime = DateTime.Now.AddHours(3);
         int duration = 6;
 
         //Act
