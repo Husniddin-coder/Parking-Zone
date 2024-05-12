@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Parking_Zone.Domain.Entities;
 using Parking_Zone.MVC.ViewModels.ParkingSlotVMs;
 using Parking_Zone.MVC.ViewModels.ReservationVMs;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,7 @@ namespace Parking_Zone.Test.ModelValidationTests.ReservationVMs;
 public class FreeSlotsVMTests
 {
     public static IEnumerable<object[]> TestData
-        => [ [1, 1, "zone", null, DateTime.UtcNow, null, true] ];
+        => [[1, 1, "zone", null, DateTime.UtcNow, null, true]];
 
     [Theory]
     [MemberData(nameof(TestData))]

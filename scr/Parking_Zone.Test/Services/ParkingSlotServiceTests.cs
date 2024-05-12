@@ -11,7 +11,6 @@ namespace Parking_Zone.Test.Services;
 public class ParkingSlotServiceTests
 {
     private readonly Mock<IParkingSlotRepository> _slotRepositoryMock;
-    private readonly Mock<IParkingSlotService> _slotServiceMock;
     private readonly IParkingSlotService _slotService;
     private readonly ParkingSlot _slotTest;
     private readonly long Id = 1;
@@ -20,7 +19,6 @@ public class ParkingSlotServiceTests
     public ParkingSlotServiceTests()
     {
         _slotRepositoryMock = new Mock<IParkingSlotRepository>();
-        _slotServiceMock = new Mock<IParkingSlotService>();
         _slotService = new ParkingSlotService(_slotRepositoryMock.Object);
         _slotTest = new()
         {
@@ -30,7 +28,7 @@ public class ParkingSlotServiceTests
             Category = SlotCategory.Premium,
             FeePerHour = 10,
             ParkingZoneId = Id,
-            Reservations = 
+            Reservations =
             [
                 new Reservation
                 {
@@ -231,15 +229,13 @@ public class ParkingSlotServiceTests
         _slotRepositoryMock
             .Setup(x => x.GetAll())
             .Returns(expectedSlots);
-        _slotServiceMock
-            .Setup(x => x.FreeSlot(_slotTest, startTime.AddHours(1), 2))
-            .Returns(true);
+
         //Act
         var result = _slotService.GetFreeSlotsByZoneIdAndPeriod(Id, startTime.AddHours(1), 2);
 
         //Assert
         Assert.NotNull(result);
-
+        Assert.Equal(JsonSerializer.Serialize(expectedSlots), JsonSerializer.Serialize(result));
         _slotRepositoryMock.Verify(x => x.GetAll(), Times.Once);
     }
     #endregion
